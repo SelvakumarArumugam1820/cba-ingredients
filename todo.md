@@ -1,0 +1,25 @@
+# CBA Ingredients Expansion Checklist
+
+- [x] Define shared page shell, route navigation, active states, and footer links.
+- [x] Make About, Applications, Sustainable Supply, and Contact visible in the header without relying on a menu.
+- [x] Diagnose and fix the About route black-screen issue on direct and header navigation.
+- [x] Harden all routes for direct loading, fallback rendering, and clean navigation.
+- [x] Verify responsive layouts across mobile, tablet, and desktop widths.
+- [x] Add final global reach polish: metadata, accessibility, and localized Saudi contact cues.
+- [x] Remove the mobile three-dot/menu control from the Home header markup and imports.
+- [x] Keep all navigation links directly visible and styled on mobile without a menu interaction.
+- [x] Verify desktop header remains unchanged and mobile header is responsive.
+- [x] Make Applications and Contact same-page navigation immediate.
+- [x] Make cross-page Applications and Contact links land on the correct Home sections without delay.
+- [x] Verify navigation timing and build after the optimization.
+- [x] Map header links to the correct Home sections and dedicated routes.
+- [x] Keep the mobile header user-friendly with a visible, styled navigation row.
+- [ ] Add dedicated Home page with richer application-led sections and animated scroll reveals.
+- [ ] Add About page with company story, customer segments, Saudi market focus, and sourcing approach.
+- [ ] Add Sustainable Supply page with responsible sourcing themes, operational principles, and practical commitments without inventing certifications or unsupported claims.
+- [ ] Add shared page hero, section labels, CTA blocks, and contact details.
+- [ ] Add responsive mobile menu and route-safe navigation.
+- [ ] Add route transitions and prefers-reduced-motion support.
+- [ ] Run TypeScript check and production build.
+- [ ] Capture desktop and mobile screenshots for the new routes.
+- [ ] Save one delivery checkpoint after verification.
