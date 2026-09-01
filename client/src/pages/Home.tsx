@@ -1,9 +1,10 @@
 /* Provenance Ledger style: editorial B2B composition, ink navy framing, saffron gold direction, tactile ingredient imagery, restrained motion. */
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { Link } from "wouter";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import SiteHeader from "@/components/SiteHeader";
 import {
   ArrowUpRight,
   Award,
@@ -106,8 +107,32 @@ const heroSlides = [
   ...categories.map((category) => ({ src: category.image, label: category.name })),
 ];
 
+type Category = (typeof categories)[number];
+
 function SectionLabel({ children }: { children: string }) {
   return <div className="section-label"><span className="label-line" />{children}</div>;
+}
+
+/** The product-category panel body — shared by the desktop side panel and the mobile inline accordion. */
+function CategoryPanel({ category }: { category: Category }) {
+  return (
+    <>
+      <div className="category-image">
+        <img src={category.image} alt={category.name} />
+        <span style={{ backgroundColor: category.accent }}>{category.number}</span>
+      </div>
+      <div className="category-detail-copy">
+        <span className="category-eyebrow">{category.eyebrow}</span>
+        <h3>{category.name}</h3>
+        <p>{category.description}</p>
+        <div className="ingredient-chips">{category.items.map((item) => <span key={item}>{item}</span>)}</div>
+        <div className="category-cta">
+          <a className="button-primary" href={`mailto:mohammed@cbaingredients.com?subject=${encodeURIComponent(`Enquiry: ${category.name}`)}`}>Request a quote <ArrowUpRight size={16} /></a>
+          <a className="category-cta-call" href="tel:+966508465636"><Phone size={15} /> +966 50 846 5636</a>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default function Home() {
@@ -150,24 +175,15 @@ export default function Home() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const selectCategory = (index: number) => {
+  const selectCategory = (index: number, rowEl?: HTMLElement | null) => {
     setActiveCategory(index);
-    // On stacked (mobile/tablet) layouts the product panel renders below the
-    // category list, so bring it into the viewport instead of forcing a manual scroll.
+    // On stacked (mobile/tablet) layouts the panel opens as an accordion directly
+    // under the tapped row — bring that row to the top so its panel is in view.
     if (typeof window === "undefined" || !window.matchMedia("(max-width: 900px)").matches) return;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     requestAnimationFrame(() => {
-      detailRef.current?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      (rowEl ?? detailRef.current)?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
     });
-  };
-
-  const jumpToHomeSection = (id: string) => {
-    if (window.location.pathname === "/") {
-      window.history.replaceState(null, "", `/#${id}`);
-      document.getElementById(id)?.scrollIntoView({ behavior: "auto", block: "start" });
-      return;
-    }
-    window.location.assign(`/#${id}`);
   };
 
   return (
@@ -176,22 +192,7 @@ export default function Home() {
         <div className="top-strip-inner"><span>Saudi-based supply partner</span><span className="top-strip-dot" /><span>Food ingredients & raw materials</span><a href="mailto:mohammed@cbaingredients.com">mohammed@cbaingredients.com</a></div>
       </div>
 
-      <div className="home-header-wrap">
-        <header className="site-header home-header">
-          <button className="brand-lockup" onClick={() => scrollTo("top")} aria-label="CBA Ingredients home">
-            <span className="brand-badge"><img src={logoUrl} alt="CBA Ingredients logo" /></span>
-            <span><strong>CBA</strong><small>INGREDIENTS</small></span>
-          </button>
-          <nav className="main-nav" aria-label="Main navigation">
-            <Link href="/">Home</Link>
-            <Link href="/about">About</Link>
-            <a href="/#categories" onClick={(event) => { event.preventDefault(); jumpToHomeSection("categories"); }}>Applications</a>
-            <Link href="/sustainable-supply">Sustainable supply</Link>
-            <a href="/#contact" onClick={(event) => { event.preventDefault(); jumpToHomeSection("contact"); }}>Contact</a>
-            <a className="nav-cta" href="mailto:mohammed@cbaingredients.com?subject=Ingredient enquiry">Start an enquiry <ArrowUpRight size={16} /></a>
-          </nav>
-        </header>
-      </div>
+      <SiteHeader variant="home" active="home" />
 
       <main id="top">
         <section className="lux-hero">
@@ -291,8 +292,42 @@ export default function Home() {
         <section id="categories" className="category-section section-pad">
           <div className="category-heading reveal"><div><SectionLabel>02 / WHAT WE SUPPLY</SectionLabel><h2>Ingredients with<br /><em>an application in mind.</em></h2></div><p>A B2B raw material supplier for food manufacturers across Saudi Arabia. Select a category to see what we stock.</p></div>
           <div className="category-layout">
-            <div className="category-list">{categories.map((category, index) => <button key={category.name} className={`category-row ${activeCategory === index ? "active" : ""}`} onClick={() => selectCategory(index)} aria-pressed={activeCategory === index}><span className="category-number">{category.number}</span><span className="category-name">{category.name}</span><span className="category-arrow"><ArrowUpRight size={18} /></span></button>)}</div>
-            <motion.div ref={detailRef} id="category-detail" key={activeCategory} className="category-detail" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.28 }}><div className="category-image"><img src={categories[activeCategory].image} alt={categories[activeCategory].name} /><span style={{ backgroundColor: categories[activeCategory].accent }}>{categories[activeCategory].number}</span></div><div className="category-detail-copy"><span className="category-eyebrow">{categories[activeCategory].eyebrow}</span><h3>{categories[activeCategory].name}</h3><p>{categories[activeCategory].description}</p><div className="ingredient-chips">{categories[activeCategory].items.map(item => <span key={item}>{item}</span>)}</div><div className="category-cta"><a className="button-primary" href={`mailto:mohammed@cbaingredients.com?subject=${encodeURIComponent(`Enquiry: ${categories[activeCategory].name}`)}`}>Request a quote <ArrowUpRight size={16} /></a><a className="category-cta-call" href="tel:+966508465636"><Phone size={15} /> +966 50 846 5636</a></div></div></motion.div>
+            <div className="category-list">
+              {categories.map((category, index) => (
+                <Fragment key={category.name}>
+                  <button
+                    className={`category-row ${activeCategory === index ? "active" : ""}`}
+                    onClick={(event) => selectCategory(index, event.currentTarget)}
+                    aria-expanded={activeCategory === index}
+                  >
+                    <span className="category-number">{category.number}</span>
+                    <span className="category-name">{category.name}</span>
+                    <span className="category-arrow"><ArrowUpRight size={18} /></span>
+                  </button>
+                  {activeCategory === index && (
+                    <motion.div
+                      className="category-detail category-detail--inline"
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                    >
+                      <CategoryPanel category={category} />
+                    </motion.div>
+                  )}
+                </Fragment>
+              ))}
+            </div>
+            <motion.div
+              ref={detailRef}
+              id="category-detail"
+              key={activeCategory}
+              className="category-detail category-detail--side"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.28 }}
+            >
+              <CategoryPanel category={categories[activeCategory]} />
+            </motion.div>
           </div>
         </section>
 
