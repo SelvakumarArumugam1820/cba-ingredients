@@ -1,6 +1,8 @@
 import { useEffect, useState, type MouseEvent } from "react";
 import { Link, useLocation } from "wouter";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, ArrowUpLeft, Menu, X } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { translate } from "@/i18n/strings";
 
 const logoUrl = "/assets/cba-logo.png";
 const ENQUIRY_HREF = "mailto:mohammed@cbaingredients.com?subject=Ingredient enquiry";
@@ -8,13 +10,17 @@ const ENQUIRY_HREF = "mailto:mohammed@cbaingredients.com?subject=Ingredient enqu
 type SiteHeaderProps = {
   /** "home" gets the dark navy shelf; "inner" gets the light page header. */
   variant?: "home" | "inner";
-  /** Which nav item to mark as the current page. */
-  active?: "home" | "about" | "sustainable";
+  /** Which nav item to mark as current. On the home page this updates as the
+   *  visitor scrolls past the Applications/Contact anchor sections. */
+  active?: "home" | "about" | "sustainable" | "applications" | "contact";
 };
 
 export default function SiteHeader({ variant = "inner", active }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [location] = useLocation();
+  const { lang, setLang } = useLanguage();
+  const t = (key: Parameters<typeof translate>[0]) => translate(key, lang);
+  const ArrowIcon = lang === "ar" ? ArrowUpLeft : ArrowUpRight;
 
   // Close the menu whenever the route changes.
   useEffect(() => {
@@ -86,12 +92,17 @@ export default function SiteHeader({ variant = "inner", active }: SiteHeaderProp
       </button>
 
       <nav id="primary-nav" className={`main-nav ${menuOpen ? "is-open" : ""}`} aria-label="Main navigation">
-        <Link href="/" className={active === "home" ? "active-page" : undefined} onClick={close}>Home</Link>
-        <Link href="/about" className={active === "about" ? "active-page" : undefined} onClick={close}>About</Link>
-        <a href="/#categories" onClick={goToSection("categories")}>Applications</a>
-        <Link href="/sustainable-supply" className={active === "sustainable" ? "active-page" : undefined} onClick={close}>Sustainable supply</Link>
-        <a href="/#contact" onClick={goToSection("contact")}>Contact</a>
-        <a className="nav-cta" href={ENQUIRY_HREF} onClick={close}>Start an enquiry <ArrowUpRight size={16} /></a>
+        <Link href="/" className={active === "home" ? "active-page" : undefined} onClick={close}>{t("navHome")}</Link>
+        <Link href="/about" className={active === "about" ? "active-page" : undefined} onClick={close}>{t("navAbout")}</Link>
+        <a href="/#categories" className={active === "applications" ? "active-page" : undefined} onClick={goToSection("categories")}>{t("navApplications")}</a>
+        <Link href="/sustainable-supply" className={active === "sustainable" ? "active-page" : undefined} onClick={close}>{t("navSustainable")}</Link>
+        <a href="/#contact" className={active === "contact" ? "active-page" : undefined} onClick={goToSection("contact")}>{t("navContact")}</a>
+        <div className="lang-switch" role="group" aria-label="Language">
+          <button type="button" className={lang === "en" ? "is-active" : ""} onClick={() => setLang("en")}>EN</button>
+          <span className="lang-switch-divider" aria-hidden="true">|</span>
+          <button type="button" className={lang === "ar" ? "is-active" : ""} onClick={() => setLang("ar")}>العربية</button>
+        </div>
+        <a className="nav-cta" href={ENQUIRY_HREF} onClick={close}>{t("navEnquiry")} <ArrowIcon size={16} /></a>
       </nav>
     </header>
   );
