@@ -56,7 +56,7 @@ function CategoryCard({ category, lang, onOpen }: { category: Category; lang: La
   );
 }
 
-/** Category detail modal: image, short description, and the real products/content supplied for that category. */
+/** Category detail modal: image, short description, products, and subsections. */
 function CategoryDetailModal({ category, lang, onClose }: { category: Category | null; lang: Lang; onClose: () => void }) {
   const ArrowIcon = lang === "ar" ? ArrowUpLeft : ArrowUpRight;
   return (
@@ -71,12 +71,30 @@ function CategoryDetailModal({ category, lang, onClose }: { category: Category |
               <DialogTitle className="category-modal-title">{category.name[lang]}</DialogTitle>
               <DialogDescription className="category-modal-desc">{category.description[lang]}</DialogDescription>
             </DialogHeader>
-            {category.products && (
+
+            {/* Main products list */}
+            {category.products && category.products.length > 0 && (
               <div className="category-modal-products">
                 {category.products.map((product) => <span key={product.en} className="category-modal-chip">{product[lang]}</span>)}
               </div>
             )}
+
+            {/* Subsections */}
+            {category.subSections && category.subSections.length > 0 && (
+              <div className="category-modal-subsections">
+                {category.subSections.map((sub) => (
+                  <div key={sub.id} className="category-modal-subsection">
+                    <h4 className="subsection-title">{sub.name[lang]}</h4>
+                    <div className="category-modal-products">
+                      {sub.products.map((product) => <span key={product.en} className="category-modal-chip subsection-chip">{product[lang]}</span>)}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {category.note && <p className="category-modal-note">{category.note[lang]}</p>}
+
             <DialogFooter className="category-modal-footer">
               <a className="button-primary" href={`mailto:mohammed@cbaingredients.com?subject=${encodeURIComponent(`Enquiry: ${category.name.en}`)}`}>{translate("requestQuote", lang)} <ArrowIcon size={16} /></a>
               <a className="category-cta-call" href="tel:+966508465636"><Phone size={15} /> +966 50 846 5636</a>
@@ -137,20 +155,11 @@ export default function Home() {
     let ticking = false;
     const updateActiveSection = () => {
       ticking = false;
-      // Compare each section's current position to the viewport (not an
-      // absolute page offset) — a page-offset comparison undershoots for a
-      // section near the bottom of the page, since the browser can't always
-      // scroll far enough to bring it all the way to the top of the viewport.
-      // Viewport-relative rather than a flat pixel value, so a section counts
-      // as "reached" once it's meaningfully in view on any screen size.
       const threshold = Math.max(120, window.innerHeight * 0.35);
       let current: "home" | "applications" | "contact" = "home";
       for (const { id, el } of sections) {
         if (el.getBoundingClientRect().top <= threshold) current = id;
       }
-      // The last section (Contact) is followed only by a short footer, so its
-      // top can never reach the threshold line if the page runs out of room
-      // to scroll further — treat "scrolled to the bottom" as reaching it.
       const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
       if (atBottom && sections.length > 0) current = sections[sections.length - 1].id;
       setActiveSection(current);
@@ -204,6 +213,7 @@ export default function Home() {
       <SiteHeader variant="home" active={activeSection} />
 
       <main id="top">
+        {/* ─── HERO ─── */}
         <section className="lux-hero">
           <div className="lux-hero-inner">
             <div className="lux-hero-copy">
@@ -262,6 +272,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ─── SEGMENTS BAND ─── */}
         <section className="segments-band">
           <div className="segments-inner">
             <p className="segments-head reveal">{t("segmentsHeading")}</p>
@@ -291,6 +302,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* ─── 01 / THE CBA DIFFERENCE ─── */}
         <section id="about" className="intro-section section-pad">
           <div className="intro-aside reveal"><SectionLabel>{t("introLabel")}</SectionLabel><div className="aside-number">01</div></div>
           <div className="intro-content reveal reveal-2">
@@ -303,9 +315,10 @@ export default function Home() {
             </div>
             <button className="underlined-link" onClick={() => scrollTo("approach")}>{t("introLink")} <ArrowIcon size={16} /></button>
           </div>
-          <div className="intro-quote reveal reveal-3"><span className="quote-mark">“</span><p>{t("introQuote")}</p><small>{t("introQuoteAttribution")}</small></div>
+          <div className="intro-quote reveal reveal-3"><span className="quote-mark">&ldquo;</span><p>{t("introQuote")}</p><small>{t("introQuoteAttribution")}</small></div>
         </section>
 
+        {/* ─── 02 / CATEGORIES ─── */}
         <section id="categories" className="category-section section-pad">
           <div className="category-heading reveal"><div><SectionLabel>{t("categoriesLabel")}</SectionLabel><h2>{t("categoriesHeadingLine1")}<br /><em>{t("categoriesHeadingLine2")}</em></h2></div><p>{t("categoriesIntro")}</p></div>
           <div className="category-grid">
@@ -325,8 +338,10 @@ export default function Home() {
 
         <CategoryDetailModal category={openCategory} lang={lang} onClose={() => setOpenCategoryId(null)} />
 
+        {/* ─── 03 / WHY CBA ─── */}
         <section id="approach" className="approach-section section-pad"><div className="approach-head reveal"><SectionLabel>{t("approachLabel")}</SectionLabel><h2>{t("approachHeadingLine1")}<br /><em>{t("approachHeadingLine2")}</em></h2><p>{t("approachIntro")}</p></div><div className="principles-grid">{principles.map((principle, index) => <motion.article key={principle.title} className="principle-card" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.45, delay: index * 0.08, ease: [0.23, 1, 0.32, 1] }}><span className="principle-index">0{index + 1}</span><principle.icon size={25} strokeWidth={1.4} /><h3>{principle.title}</h3><p>{principle.text}</p></motion.article>)}</div><div className="approach-banner reveal"><div><span className="banner-kicker">{t("bannerKicker")}</span><h3>{t("bannerHeadingLine1")}<br />{t("bannerHeadingLine2")}</h3></div><button className="button-light" onClick={() => scrollTo("contact")}>{t("startConversation")} <ArrowIcon size={17} /></button></div></section>
 
+        {/* ─── 04 / CONTACT ─── */}
         <section id="contact" className="contact-section section-pad"><div className="contact-intro reveal"><SectionLabel>{t("contactLabel")}</SectionLabel><h2>{t("contactHeadingLine1")}<br /><em>{t("contactHeadingLine2")}</em></h2><p>{t("contactIntro")}</p><a className="contact-email" href="mailto:mohammed@cbaingredients.com">mohammed@cbaingredients.com <ArrowIcon size={18} /></a></div><div className="contact-card reveal reveal-2"><div className="contact-card-top"><span className="contact-card-label">CBA INGREDIENTS COMPANY</span><MapPin size={22} /></div><div className="address-block"><h3>{t("addressHeading")}</h3><p>Building 5283, King Fahad ibn Abdulaziz Rd<br />1st Industrial District<br />Dammam 32234<br />Kingdom of Saudi Arabia</p></div><div className="address-meta"><span><small>{t("shortAddress")}</small><strong>EDGA5283</strong></span><span><small>{t("contactLabelSmall")}</small><a href="tel:+966508465636">+966 50 846 5636</a></span></div><div className="contact-card-bottom"><span>{t("availableForEnquiries")}</span><span className="gold-dot" /></div></div></section>
       </main>
 
