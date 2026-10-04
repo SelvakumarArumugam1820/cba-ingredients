@@ -3859,3 +3859,323 @@ button:focus-visible {
     border-radius: 10px;
   }
 }
+
+/* ─── Experience & Expertise Section ─── */
+.expertise-section {
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.expertise-header {
+  margin-bottom: 36px;
+}
+
+.expertise-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(38px, 4.5vw, 64px);
+  color: var(--ink);
+  line-height: .96;
+  margin-top: 12px;
+}
+
+.expertise-grid-layout {
+  display: grid;
+  grid-template-columns: 48fr 52fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.expertise-narrative {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.expertise-narrative .lead-copy {
+  color: var(--ink);
+  font-size: 19.5px;
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+.expertise-narrative p:not(.lead-copy) {
+  color: var(--muted);
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.expertise-cards-wrap {
+  background: white;
+  padding: 34px 36px;
+  border-radius: 12px;
+  box-shadow: 0 14px 36px rgba(17, 45, 74, .06);
+  border: 1px solid var(--line);
+}
+
+.expertise-subheading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 22px;
+  letter-spacing: -.01em;
+}
+
+.expertise-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.expertise-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  transition: transform .25s var(--ease-out), border-color .25s, box-shadow .25s;
+  position: relative;
+}
+
+.expertise-card:hover {
+  transform: translateX(4px);
+  border-color: var(--gold);
+  box-shadow: 0 6px 18px rgba(201, 154, 61, .15);
+  background: white;
+}
+
+/* RTL adjustment for hover */
+[dir="rtl"] .expertise-card:hover {
+  transform: translateX(-4px);
+}
+
+.expertise-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 6px;
+  background: rgba(201, 154, 61, .12);
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.expertise-card-text {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--ink);
+  flex: 1;
+  line-height: 1.4;
+}
+
+.expertise-card-num {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--gold);
+  letter-spacing: .08em;
+  opacity: .7;
+}
+
+.expertise-footer-note {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.expertise-footer-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--ink-deep);
+  color: white;
+  padding: 24px 30px;
+  border-radius: 8px;
+  border-left: 4px solid var(--gold);
+}
+
+[dir="rtl"] .expertise-footer-inner {
+  border-left: 0;
+  border-right: 4px solid var(--gold);
+}
+
+.expertise-footer-inner .gold-dot {
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.expertise-footer-inner p {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  font-weight: 500;
+  color: #E2E8F0;
+}
+
+@media (max-width: 900px) {
+  .expertise-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .expertise-cards-wrap {
+    padding: 24px 22px;
+  }
+
+  .expertise-footer-inner {
+    padding: 20px 22px;
+  }
+}
+
+@media (max-width: 560px) {
+  .expertise-card {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .expertise-card-text {
+    font-size: 13.5px;
+  }
+}
+
+/* ============================================================================
+   Comprehensive Responsive & Ergonomics Refinement Pass
+   Covers ultra-small phones (320px), mobile (360px-430px), tablet/iPad portrait
+   (768px-834px), tablet/iPad landscape (1024px-1180px), laptop (1280px-1440px),
+   and 4K desktop (1600px-1920px+).
+   ============================================================================ */
+
+/* Text-break safety for narrow screens */
+.expertise-narrative p,
+.expertise-card-text,
+.expertise-footer-inner p,
+.contact-intro p,
+.address-block p,
+.intro-content p,
+.hero-tagline,
+.lux-tagline {
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+/* 320px - 380px Ultra-small Mobile Optimization */
+@media (max-width: 380px) {
+  .site-header {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .brand-lockup img {
+    width: 38px;
+    height: 38px;
+  }
+
+  .brand-lockup strong {
+    font-size: 16px;
+    letter-spacing: .1em;
+  }
+
+  .brand-lockup small {
+    font-size: 6.5px;
+    letter-spacing: .18em;
+  }
+
+  .home-header .brand-badge {
+    width: 38px;
+    height: 38px;
+  }
+
+  .intro-stats {
+    gap: 16px 20px;
+  }
+
+  .intro-stat strong {
+    font-size: 32px;
+  }
+
+  .contact-card {
+    padding: 20px 16px;
+  }
+
+  .contact-email {
+    font-size: 14px;
+    overflow-wrap: break-all;
+  }
+
+  .expertise-cards-wrap {
+    padding: 18px 14px;
+  }
+
+  .expertise-card {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .expertise-card-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .expertise-card-text {
+    font-size: 12.5px;
+  }
+
+  .expertise-footer-inner {
+    padding: 16px 14px;
+    gap: 10px;
+  }
+
+  .expertise-footer-inner p {
+    font-size: 13.5px;
+  }
+}
+
+/* 560px - 820px Mobile Landscape & Tablet Portrait */
+@media (min-width: 561px) and (max-width: 820px) {
+  .expertise-grid-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+}
+
+/* 821px - 1024px iPad / Tablet Ergonomics */
+@media (min-width: 821px) and (max-width: 1024px) {
+  .expertise-grid-layout {
+    grid-template-columns: 46fr 54fr;
+    gap: 36px;
+  }
+
+  .expertise-cards-wrap {
+    padding: 28px 24px;
+  }
+}
+
+/* RTL (Arabic) Structural Alignment Polish */
+[dir="rtl"] .expertise-narrative,
+[dir="rtl"] .expertise-subheading,
+[dir="rtl"] .expertise-card-text,
+[dir="rtl"] .expertise-footer-inner,
+[dir="rtl"] .intro-content,
+[dir="rtl"] .contact-intro,
+[dir="rtl"] .contact-card,
+[dir="rtl"] .address-block,
+[dir="rtl"] .address-meta,
+[dir="rtl"] .story-copy,
+[dir="rtl"] .story-aside {
+  text-align: right;
+}
+
+[dir="rtl"] .intro-aside {
+  text-align: right;
+}
+
+[dir="rtl"] .intro-stat {
+  align-items: flex-start;
+}

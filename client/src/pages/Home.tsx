@@ -318,6 +318,55 @@ export default function Home() {
           <div className="intro-quote reveal reveal-3"><span className="quote-mark">&ldquo;</span><p>{t("introQuote")}</p><small>{t("introQuoteAttribution")}</small></div>
         </section>
 
+        {/* ─── EXPERIENCE & EXPERTISE ─── */}
+        <section id="expertise" className="expertise-section section-pad">
+          <div className="expertise-header reveal">
+            <SectionLabel>{t("expLabel")}</SectionLabel>
+            <h2>{t("expHeading")}</h2>
+          </div>
+
+          <div className="expertise-grid-layout">
+            <div className="expertise-narrative reveal reveal-2">
+              <p className="lead-copy">{t("expP1")}</p>
+              <p>{t("expP2")}</p>
+              <p>{t("expP3")}</p>
+            </div>
+
+            <div className="expertise-cards-wrap reveal reveal-3">
+              <h3 className="expertise-subheading">{t("expSubheading")}</h3>
+              <div className="expertise-cards-grid">
+                {[
+                  { icon: PackageCheck, text: t("expPoint1"), num: "01" },
+                  { icon: ShieldCheck, text: t("expPoint2"), num: "02" },
+                  { icon: Truck, text: t("expPoint3"), num: "03" },
+                  { icon: Award, text: t("expPoint4"), num: "04" },
+                  { icon: Headset, text: t("expPoint5"), num: "05" },
+                ].map((item, index) => (
+                  <motion.div
+                    key={item.text}
+                    className="expertise-card"
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-30px" }}
+                    transition={{ duration: 0.35, delay: index * 0.06, ease: [0.23, 1, 0.32, 1] }}
+                  >
+                    <span className="expertise-card-icon"><item.icon size={20} strokeWidth={1.5} /></span>
+                    <span className="expertise-card-text">{item.text}</span>
+                    <span className="expertise-card-num">{item.num}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="expertise-footer-note reveal">
+            <div className="expertise-footer-inner">
+              <span className="gold-dot" />
+              <p>{t("expFinalP")}</p>
+            </div>
+          </div>
+        </section>
+
         {/* ─── 02 / CATEGORIES ─── */}
         <section id="categories" className="category-section section-pad">
           <div className="category-heading reveal"><div><SectionLabel>{t("categoriesLabel")}</SectionLabel><h2>{t("categoriesHeadingLine1")}<br /><em>{t("categoriesHeadingLine2")}</em></h2></div><p>{t("categoriesIntro")}</p></div>

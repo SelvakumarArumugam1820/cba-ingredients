@@ -112,6 +112,32 @@ const dict = {
   contactLabelSmall: { en: "Contact", ar: "التواصل" },
   availableForEnquiries: { en: "Available for business enquiries", ar: "متاحون للاستفسارات التجارية" },
 
+  // Experience & Expertise section
+  expLabel: { en: "EXPERIENCE & EXPERTISE", ar: "الخبرة والكفاءة" },
+  expHeading: { en: "Experience & Expertise", ar: "الخبرة والكفاءة" },
+  expP1: {
+    en: "At CB Ingredients, our team brings over 10 years of experience in the food ingredients industry, with strong knowledge of ingredient sourcing, purchasing, logistics, and customer requirements.",
+    ar: "في سي بي إيه للمكونات، يمتلك فريقنا أكثر من 10 سنوات من الخبرة في صناعة المكونات الغذائية، مع معرفة عميقة بتوريد المكونات والشراء واللوجستيات ومتطلبات العملاء.",
+  },
+  expP2: {
+    en: "Our industry experience enables us to understand the needs of food manufacturers and provide reliable ingredient sourcing solutions with a strong focus on quality, consistency, and timely delivery.",
+    ar: "تمكّننا خبرتنا الصناعية من فهم احتياجات مصنّعي الأغذية وتوفير حلول توريد مكونات موثوقة مع التركيز القوي على الجودة والاتساق والتسليم في الوقت المحدد.",
+  },
+  expP3: {
+    en: "We work closely with our purchasing and logistics partners to support efficient sourcing and delivery arrangements, helping our customers receive the right ingredients at the right time.",
+    ar: "نعمل عن كثب مع شركائنا في الشراء واللوجستيات لترتيبات التوريد والتسليم الفعالة، مما يساعد عملائنا على استلام المكونات المناسبة في الوقت المناسب.",
+  },
+  expSubheading: { en: "Our expertise includes:", ar: "تشمل خبراتنا:" },
+  expPoint1: { en: "Food ingredient sourcing and procurement", ar: "توريد وشراء المكونات الغذائية" },
+  expPoint2: { en: "Supplier coordination and purchasing", ar: "التنسيق مع الموردين وعمليات الشراء" },
+  expPoint3: { en: "Logistics and delivery arrangements", ar: "ترتيبات اللوجستيات والتسليم" },
+  expPoint4: { en: "Understanding of food industry requirements", ar: "فهم متطلبات صناعة الأغذية" },
+  expPoint5: { en: "Reliable customer support and order coordination", ar: "دعم العملاء الموثوق والتنسيق لطلبات التوريد" },
+  expFinalP: {
+    en: "At CB Ingredients, we aim to build long-term customer relationships by providing dependable sourcing solutions and responsive service.",
+    ar: "في سي بي إيه للمكونات، نهدف إلى بناء علاقات طويلة الأمد مع العملاء من خلال تقديم حلول توريد يُعتمد عليها وخدمة سريعة الاستجابة.",
+  },
+
   // Footer
   footerTagline: { en: "Food ingredients & raw materials", ar: "مكونات غذائية ومواد خام" },
   footerLocation: { en: "Dammam, Saudi Arabia", ar: "الدمام، المملكة العربية السعودية" },

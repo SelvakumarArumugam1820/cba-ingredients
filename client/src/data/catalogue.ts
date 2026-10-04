@@ -27,14 +27,13 @@ export type CategoryId =
   | "dairy"
   | "beverage-functional"
   | "bakery"
-  | "coffee"
+  | "coffee-shop"
   | "flavours"
   | "natural-colours"
   | "artificial-colours"
   | "butter"
   | "chocolate"
-  | "restaurant"
-  | "coffee-shop";
+  | "restaurant";
 
 export type Localized = { en: string; ar: string };
 
@@ -63,7 +62,6 @@ export type Category = {
 const dairyUrl = "/assets/cba-dairy-icecream.webp";
 const beverageFunctionalUrl = "/assets/cba-beverage-functional.png";
 const bakeryUrl = "/assets/cba-bakery-spices.webp";
-const coffeeUrl = "/assets/cba-coffee.png";
 const flavoursUrl = "/assets/cba-flavours.png";
 const naturalColoursUrl = "/assets/cba-natural-colours.png";
 const artificialColoursUrl = "/assets/cba-artificial-colours.png";
@@ -88,7 +86,6 @@ export const categories: Category[] = [
     icon: MilkIcon,
     accent: "#C99A3D",
     products: [
-      /* Existing valid products preserved */
       { en: "Whole Milk Powder – Regular Grade", ar: "مسحوق الحليب كامل الدسم – درجة عادية" },
       { en: "Whole Milk Powder – UHT Grade", ar: "مسحوق الحليب كامل الدسم – درجة UHT" },
       { en: "Instant Whole Milk Powder", ar: "مسحوق الحليب كامل الدسم الفوري" },
@@ -102,7 +99,6 @@ export const categories: Category[] = [
       { en: "Butter", ar: "زبدة" },
       { en: "Unsalted Butter", ar: "زبدة غير مملحة" },
       { en: "Vanaspati", ar: "فاناسباتي" },
-      /* New products */
       { en: "Pectin", ar: "بكتين" },
       { en: "Carragenan", ar: "كاراجينان" },
       { en: "CMC & HPMC", ar: "CMC & HPMC" },
@@ -117,37 +113,6 @@ export const categories: Category[] = [
       { en: "Collagen +Fiber", ar: "كولاجين + ألياف" },
       { en: "Gelatin", ar: "جيلاتين" },
       { en: "Unsalted butter 82%", ar: "زبدة غير مملحة 82%" },
-    ],
-    subSections: [
-      {
-        id: "beverage-functional-sub",
-        name: { en: "Beverage Functional Ingredients", ar: "المكونات الوظيفية للمشروبات" },
-        products: [
-          { en: "Pectin", ar: "بكتين" },
-          { en: "Carragenan", ar: "كاراجينان" },
-          { en: "CMC & HPMC", ar: "CMC & HPMC" },
-          { en: "Guar Gum", ar: "صمغ الغار" },
-          { en: "Xanthan Gum", ar: "صمغ الزانثان" },
-          { en: "Gellan Gum", ar: "صمغ الجيلان" },
-          { en: "Locust Bean Gum (LBG)", ar: "صمغ الخرّوب (LBG)" },
-          { en: "Sodium Alginate", ar: "ألجينات الصوديوم" },
-          { en: "Citric Acid", ar: "حمض الستريك" },
-          { en: "Tri Sodium Citrate", ar: "سترات الصوديوم الثلاثية" },
-          { en: "Ascorbic acid", ar: "حمض الأسكوربيك" },
-          { en: "Potassium sorbate", ar: "سوربات البوتاسيوم" },
-          { en: "Fumaric Acid", ar: "حمض الفيوماريك" },
-          { en: "Lactic Acid", ar: "حمض اللاكتيك" },
-          { en: "Phosphoric Acid", ar: "حمض الفوسفوريك" },
-        ],
-      },
-      {
-        id: "beverage-pulps-sub",
-        name: { en: "Beverage Pulps", ar: "لُبّ الفواكه للمشروبات" },
-        products: [
-          { en: "Mango pulp", ar: "لبّ المانجو" },
-          { en: "Goua pulp", ar: "لبّ الجوافة" },
-        ],
-      },
     ],
   },
 
@@ -185,7 +150,7 @@ export const categories: Category[] = [
     subSections: [
       {
         id: "beverage-pulps-standalone",
-        name: { en: "Beverage Pulps", ar: "لُبّ الفواكه للمشروبات" },
+        name: { en: "Beverage Applications / Pulps", ar: "تطبيقات المشروبات / لُبّ الفواكه" },
         products: [
           { en: "Mango pulp", ar: "لبّ المانجو" },
           { en: "Goua pulp", ar: "لبّ الجوافة" },
@@ -233,31 +198,37 @@ export const categories: Category[] = [
   },
 
   /* ═══════════════════════════════════════════════
-   * 4. COFFEE
+   * 4. COFFEE SHOP
    * ═══════════════════════════════════════════════ */
   {
-    id: "coffee",
-    name: { en: "Coffee", ar: "القهوة" },
-    shortText: { en: "Coffee & chai ingredients", ar: "مكونات القهوة والشاي" },
+    id: "coffee-shop",
+    name: { en: "Coffee Shop", ar: "المقهى" },
+    shortText: { en: "Coffee & beverage-ready supply", ar: "مكونات القهوة والشاي والمشروبات" },
     description: {
-      en: "Ingredients for coffee, karak chai, and hot beverage applications.",
-      ar: "مكونات للقهوة والكرك والمشروبات الساخنة.",
+      en: "Creamers, powders, flavours, and essential ingredients for coffee shop and hot beverage menus.",
+      ar: "مساحيق وكريمة ونكهات ومكونات أساسية لتطبيقات المقاهي والمشروبات الساخنة.",
     },
-    image: coffeeUrl,
+    image: coffeeShopUrl,
     icon: CoffeeIcon,
     accent: "#6B4226",
-    products: [
-      { en: "Maltodextrin", ar: "مالتوديكسترين" },
-      { en: "Non dairy creamer", ar: "كريمة غير حليبية" },
-      { en: "Sweet whey powder", ar: "مسحوق مصل اللبن الحلو" },
-      { en: "Vannila powder", ar: "مسحوق الفانيليا" },
-      { en: "Coffee creamer", ar: "كريمة القهوة" },
-      { en: "Karak chai Flavour powder foam", ar: "بودرة نكهة كرك تشاي رغوة" },
-      { en: "Ice coffee flavour", ar: "نكهة القهوة المثلجة" },
-      { en: "Cardamom powder", ar: "مسحوق الهيل" },
-      { en: "Cardamom Flavour", ar: "نكهة الهيل" },
-      { en: "Ginger powder", ar: "مسحوق الزنجبيل" },
-      { en: "Ginger Flavour powder foam", ar: "بودرة نكهة الزنجبيل رغوة" },
+    subSections: [
+      {
+        id: "coffee-ingredients-sub",
+        name: { en: "Coffee Ingredients", ar: "مكونات القهوة" },
+        products: [
+          { en: "Maltodextrin", ar: "مالتوديكسترين" },
+          { en: "Non dairy creamer", ar: "كريمة غير حليبية" },
+          { en: "Sweet whey powder", ar: "مسحوق مصل اللبن الحلو" },
+          { en: "Vannila powder", ar: "مسحوق الفانيليا" },
+          { en: "Coffee creamer", ar: "كريمة القهوة" },
+          { en: "Karak chai Flavour powder foam", ar: "بودرة نكهة كرك تشاي رغوة" },
+          { en: "Ice coffee flavour", ar: "نكهة القهوة المثلجة" },
+          { en: "Cardamom powder", ar: "مسحوق الهيل" },
+          { en: "Cardamom Flavour", ar: "نكهة الهيل" },
+          { en: "Ginger powder", ar: "مسحوق الزنجبيل" },
+          { en: "Ginger Flavour powder foam", ar: "بودرة نكهة الزنجبيل رغوة" },
+        ],
+      },
     ],
   },
 
@@ -413,24 +384,5 @@ export const categories: Category[] = [
       ar: "تحدث معنا عن المكونات التي يحتاجها مطبخك — سنساعدك في اختيار الفئات المناسبة أعلاه.",
     },
   },
-
-  /* ═══════════════════════════════════════════════
-   * 11. COFFEE SHOP
-   * ═══════════════════════════════════════════════ */
-  {
-    id: "coffee-shop",
-    name: { en: "Coffee Shop", ar: "المقهى" },
-    shortText: { en: "Beverage-ready supply", ar: "توريد جاهز للمشروبات" },
-    description: {
-      en: "Non-dairy creamers, milk powders, and beverage ingredients suited to coffee shop menus.",
-      ar: "بدائل كريمة خالية من الألبان ومساحيق حليب ومكونات مشروبات مناسبة لقوائم المقاهي.",
-    },
-    image: coffeeShopUrl,
-    icon: CoffeeIcon,
-    accent: "#0284C7",
-    note: {
-      en: "Ask us about our beverage and dairy ingredients for coffee shop applications.",
-      ar: "اسألنا عن مكونات المشروبات والألبان المناسبة لتطبيقات المقاهي.",
-    },
-  },
 ];
+
