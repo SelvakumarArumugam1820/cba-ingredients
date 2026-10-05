@@ -22,10 +22,16 @@ const dict = {
   navEnquiry: { en: "Start an enquiry", ar: "ابدأ استفسارًا" },
 
   // Hero
-  heroEyebrowCompany: { en: "CBA Ingredient Company", ar: "شركة سي بي إيه للمكونات" },
+  heroEyebrowCompany: { en: "CBA Ingredients Company", ar: "شركة سي بي إيه للمكونات" },
   heroEyebrowCountry: { en: "Saudi Arabia", ar: "المملكة العربية السعودية" },
   heroTitle: { en: "Your Trusted Partner", ar: "شريكك الموثوق" },
+  heroSourcingPartner: { en: "Sourcing Partner", ar: "شريك التوريد" },
+  heroSupplyPartner: { en: "Supply Partner", ar: "شريك الإمداد" },
   heroTagline: { en: "Order from Verified & Safe Food Suppliers", ar: "اطلب من موردي أغذية موثوقين وآمنين" },
+  heroSubBenefit: {
+    en: "Direct B2B sourcing for food manufacturers, restaurants, and food-service teams across Saudi Arabia.",
+    ar: "توريد مباشر لمصنّعي الأغذية والمطاعم وفرق خدمات الطعام في جميع أنحاء المملكة العربية السعودية.",
+  },
   badgeLocalSourcing: { en: "Local sourcing", ar: "توريد محلي" },
   badgeReliableSupply: { en: "Reliable supply", ar: "إمداد موثوق" },
   badgeQualityIngredients: { en: "Quality ingredients", ar: "مكونات عالية الجودة" },
@@ -116,7 +122,7 @@ const dict = {
   expLabel: { en: "EXPERIENCE & EXPERTISE", ar: "الخبرة والكفاءة" },
   expHeading: { en: "Experience & Expertise", ar: "الخبرة والكفاءة" },
   expP1: {
-    en: "At CB Ingredients, our team brings over 10 years of experience in the food ingredients industry, with strong knowledge of ingredient sourcing, purchasing, logistics, and customer requirements.",
+    en: "At CBA Ingredients, our team brings over 10 years of experience in the food ingredients industry, with strong knowledge of ingredient sourcing, purchasing, logistics, and customer requirements.",
     ar: "في سي بي إيه للمكونات، يمتلك فريقنا أكثر من 10 سنوات من الخبرة في صناعة المكونات الغذائية، مع معرفة عميقة بتوريد المكونات والشراء واللوجستيات ومتطلبات العملاء.",
   },
   expP2: {
@@ -134,7 +140,7 @@ const dict = {
   expPoint4: { en: "Understanding of food industry requirements", ar: "فهم متطلبات صناعة الأغذية" },
   expPoint5: { en: "Reliable customer support and order coordination", ar: "دعم العملاء الموثوق والتنسيق لطلبات التوريد" },
   expFinalP: {
-    en: "At CB Ingredients, we aim to build long-term customer relationships by providing dependable sourcing solutions and responsive service.",
+    en: "At CBA Ingredients, we aim to build long-term customer relationships by providing dependable sourcing solutions and responsive service.",
     ar: "في سي بي إيه للمكونات، نهدف إلى بناء علاقات طويلة الأمد مع العملاء من خلال تقديم حلول توريد يُعتمد عليها وخدمة سريعة الاستجابة.",
   },
 

@@ -1,6 +1,6 @@
 import { useEffect, useState, type MouseEvent } from "react";
 import { Link, useLocation } from "wouter";
-import { ArrowUpRight, ArrowUpLeft, Menu, X } from "lucide-react";
+import { ArrowUpRight, ArrowUpLeft, Languages, Menu, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translate } from "@/i18n/strings";
 
@@ -80,16 +80,34 @@ export default function SiteHeader({ variant = "inner", active }: SiteHeaderProp
         <span><strong>CBA</strong><small>INGREDIENTS</small></span>
       </Link>
 
-      <button
-        type="button"
-        className={`nav-toggle ${menuOpen ? "is-open" : ""}`}
-        aria-label={menuOpen ? "Close menu" : "Open menu"}
-        aria-expanded={menuOpen}
-        aria-controls="primary-nav"
-        onClick={() => setMenuOpen((open) => !open)}
-      >
-        {menuOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
+      {/* Mobile-only controls: a one-tap language toggle beside the hamburger,
+          so switching language never requires opening the menu. Wrapped
+          together so the header's space-between layout keeps them paired on
+          the right edge instead of splitting them apart. The full EN |
+          العربية switcher further down stays inside the dropdown for
+          desktop/tablet. */}
+      <div className="mobile-header-actions">
+        <button
+          type="button"
+          className="mobile-lang-toggle"
+          onClick={() => setLang(lang === "en" ? "ar" : "en")}
+          aria-label={lang === "en" ? "Switch to Arabic" : "التبديل إلى الإنجليزية"}
+        >
+          <Languages size={15} />
+          {lang === "en" ? "AR" : "EN"}
+        </button>
+
+        <button
+          type="button"
+          className={`nav-toggle ${menuOpen ? "is-open" : ""}`}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="primary-nav"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
 
       <nav id="primary-nav" className={`main-nav ${menuOpen ? "is-open" : ""}`} aria-label="Main navigation">
         <Link href="/" className={active === "home" ? "active-page" : undefined} onClick={close}>{t("navHome")}</Link>

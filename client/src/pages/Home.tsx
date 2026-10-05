@@ -97,7 +97,7 @@ function CategoryDetailModal({ category, lang, onClose }: { category: Category |
 
             <DialogFooter className="category-modal-footer">
               <a className="button-primary" href={`mailto:mohammed@cbaingredients.com?subject=${encodeURIComponent(`Enquiry: ${category.name.en}`)}`}>{translate("requestQuote", lang)} <ArrowIcon size={16} /></a>
-              <a className="category-cta-call" href="tel:+966508465636"><Phone size={15} /> +966 50 846 5636</a>
+              <a className="category-cta-call" href="tel:+966508465636"><Phone size={15} /> <bdi>+966 50 846 5636</bdi></a>
             </DialogFooter>
           </>
         )}
@@ -219,7 +219,12 @@ export default function Home() {
             <div className="lux-hero-copy">
               <div className="lux-eyebrow"><span className="pulse-dot" /> {t("heroEyebrowCompany")} <span className="lux-eyebrow-rule" /> {t("heroEyebrowCountry")}</div>
               <h1 className="lux-title">{t("heroTitle")}</h1>
+              <p className="lux-partner-lines">
+                <span className="lux-partner-line lux-partner-line--gold">{t("heroSourcingPartner")}</span>
+                <span className="lux-partner-line lux-partner-line--white">{t("heroSupplyPartner")}</span>
+              </p>
               <p className="lux-tagline">{t("heroTagline")}</p>
+              <p className="lux-sub">{t("heroSubBenefit")}</p>
               <div className="lux-badges">
                 <span className="lux-badge"><MapPin size={14} /> {t("badgeLocalSourcing")}</span>
                 <span className="lux-badge"><Truck size={14} /> {t("badgeReliableSupply")}</span>
@@ -391,7 +396,7 @@ export default function Home() {
         <section id="approach" className="approach-section section-pad"><div className="approach-head reveal"><SectionLabel>{t("approachLabel")}</SectionLabel><h2>{t("approachHeadingLine1")}<br /><em>{t("approachHeadingLine2")}</em></h2><p>{t("approachIntro")}</p></div><div className="principles-grid">{principles.map((principle, index) => <motion.article key={principle.title} className="principle-card" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.45, delay: index * 0.08, ease: [0.23, 1, 0.32, 1] }}><span className="principle-index">0{index + 1}</span><principle.icon size={25} strokeWidth={1.4} /><h3>{principle.title}</h3><p>{principle.text}</p></motion.article>)}</div><div className="approach-banner reveal"><div><span className="banner-kicker">{t("bannerKicker")}</span><h3>{t("bannerHeadingLine1")}<br />{t("bannerHeadingLine2")}</h3></div><button className="button-light" onClick={() => scrollTo("contact")}>{t("startConversation")} <ArrowIcon size={17} /></button></div></section>
 
         {/* ─── 04 / CONTACT ─── */}
-        <section id="contact" className="contact-section section-pad"><div className="contact-intro reveal"><SectionLabel>{t("contactLabel")}</SectionLabel><h2>{t("contactHeadingLine1")}<br /><em>{t("contactHeadingLine2")}</em></h2><p>{t("contactIntro")}</p><a className="contact-email" href="mailto:mohammed@cbaingredients.com">mohammed@cbaingredients.com <ArrowIcon size={18} /></a></div><div className="contact-card reveal reveal-2"><div className="contact-card-top"><span className="contact-card-label">CBA INGREDIENTS COMPANY</span><MapPin size={22} /></div><div className="address-block"><h3>{t("addressHeading")}</h3><p>Building 5283, King Fahad ibn Abdulaziz Rd<br />1st Industrial District<br />Dammam 32234<br />Kingdom of Saudi Arabia</p></div><div className="address-meta"><span><small>{t("shortAddress")}</small><strong>EDGA5283</strong></span><span><small>{t("contactLabelSmall")}</small><a href="tel:+966508465636">+966 50 846 5636</a></span></div><div className="contact-card-bottom"><span>{t("availableForEnquiries")}</span><span className="gold-dot" /></div></div></section>
+        <section id="contact" className="contact-section section-pad"><div className="contact-intro reveal"><SectionLabel>{t("contactLabel")}</SectionLabel><h2>{t("contactHeadingLine1")}<br /><em>{t("contactHeadingLine2")}</em></h2><p>{t("contactIntro")}</p><a className="contact-email" href="mailto:mohammed@cbaingredients.com">mohammed@cbaingredients.com <ArrowIcon size={18} /></a></div><div className="contact-card reveal reveal-2"><div className="contact-card-top"><span className="contact-card-label">CBA INGREDIENTS COMPANY</span><MapPin size={22} /></div><div className="address-block"><h3>{t("addressHeading")}</h3><p>Building 5283, King Fahad ibn Abdulaziz Rd<br />1st Industrial District<br />Dammam 32234<br />Kingdom of Saudi Arabia</p></div><div className="address-meta"><span><small>{t("shortAddress")}</small><strong>EDGA5283</strong></span><span><small>{t("contactLabelSmall")}</small><a href="tel:+966508465636"><bdi>+966 50 846 5636</bdi></a></span></div><div className="contact-card-bottom"><span>{t("availableForEnquiries")}</span><span className="gold-dot" /></div></div></section>
       </main>
 
       <footer className="site-footer"><div className="footer-brand"><img src={logoUrl} alt="CBA Ingredients" /><div><strong>CBA Ingredients</strong><span>{t("footerTagline")}</span></div></div><div className="footer-links"><Link href="/about">{t("navAbout")}</Link><button onClick={() => scrollTo("categories")}>{t("navApplications")}</button><Link href="/sustainable-supply">{t("navSustainable")}</Link><button onClick={() => scrollTo("contact")}>{t("navContact")}</button></div><div className="footer-note">© 2026 CBA Ingredients Company<br />{t("footerLocation")}</div></footer>

@@ -142,8 +142,8 @@ a {
 }
 
 .brand-lockup img {
-  width: 62px;
-  height: 62px;
+  width: 72px;
+  height: 72px;
   object-fit: contain;
   mix-blend-mode: multiply;
 }
@@ -2479,8 +2479,8 @@ h2 {
   }
 
   .brand-lockup img {
-    width: 50px;
-    height: 50px;
+    width: 56px;
+    height: 56px;
   }
 
   .brand-lockup strong {
@@ -2503,8 +2503,8 @@ h2 {
   }
 
   .brand-lockup img {
-    width: 44px;
-    height: 44px;
+    width: 50px;
+    height: 50px;
   }
 
   .brand-lockup strong {
@@ -2627,22 +2627,12 @@ section[id] {
   color: var(--gold);
 }
 
+/* The logo itself is now a complete circular badge (crescent, stars, full
+   lettering) — the old gold-coin frame behind it just doubled up the circle
+   and muddied the detail, so it's removed in favor of showing the logo at
+   full size and clarity, same as the inner-page header already does. */
 .home-header .brand-badge {
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  background: radial-gradient(circle at 40% 34%, #fbf4e2, #ecd6a6 66%, #d6b26f);
-  box-shadow: 0 0 0 1px rgba(228, 196, 122, .55), 0 4px 16px rgba(0, 0, 0, .4), 0 0 22px rgba(201, 154, 61, .28);
-}
-
-.home-header .brand-badge img {
-  width: 84%;
-  height: 84%;
-  object-fit: contain;
-  mix-blend-mode: multiply;
+  display: contents;
 }
 
 .home-header .main-nav a,
@@ -2674,22 +2664,12 @@ section[id] {
   .home-header.site-header {
     overflow: visible;
   }
-
-  .home-header .brand-badge {
-    width: 46px;
-    height: 46px;
-  }
 }
 
 @media (max-width: 560px) {
   .home-header.site-header {
     overflow: visible;
     min-height: 0;
-  }
-
-  .home-header .brand-badge {
-    width: 42px;
-    height: 42px;
   }
 }
 
@@ -2780,6 +2760,30 @@ section[id] {
   color: var(--gold);
   margin-top: .16em;
   line-height: 1.12;
+}
+
+.lux-partner-lines {
+  margin: 8px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lux-partner-line {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  letter-spacing: .01em;
+  line-height: 1.15;
+  font-size: clamp(19px, 2.6vw, 29px);
+  overflow-wrap: break-word;
+}
+
+.lux-partner-line--gold {
+  color: var(--gold-light);
+}
+
+.lux-partner-line--white {
+  color: rgba(255, 255, 255, .9);
 }
 
 .lux-tagline {
@@ -3250,6 +3254,10 @@ section[id] {
   animation-delay: .4s;
 }
 
+.lux-hero-copy>*:nth-child(7) {
+  animation-delay: .47s;
+}
+
 .lux-hero-media {
   animation: luxUp .8s var(--ease-out) .18s both;
 }
@@ -3506,6 +3514,14 @@ button:focus-visible {
   display: none;
 }
 
+.mobile-lang-toggle {
+  display: none;
+}
+
+.mobile-header-actions {
+  display: contents;
+}
+
 .nav-backdrop {
   display: none;
 }
@@ -3519,6 +3535,13 @@ button:focus-visible {
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .mobile-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 auto;
   }
 
   .nav-toggle {
@@ -3552,6 +3575,50 @@ button:focus-visible {
   .home-header .nav-toggle:hover,
   .home-header .nav-toggle:focus-visible {
     background: rgba(201, 154, 61, 0.16);
+    color: #fff;
+  }
+
+  /* One-tap language pill, mobile only — sits beside the hamburger so
+     switching language never requires opening the menu. */
+  .mobile-lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-width: 44px;
+    height: 44px;
+    padding: 0 13px;
+    flex: 0 0 auto;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(17, 45, 74, 0.04);
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    transition: background .2s var(--ease-out), border-color .2s, color .2s;
+  }
+
+  .mobile-lang-toggle svg {
+    flex: 0 0 auto;
+  }
+
+  .mobile-lang-toggle:hover,
+  .mobile-lang-toggle:focus-visible {
+    background: rgba(17, 45, 74, 0.07);
+    border-color: var(--ink);
+  }
+
+  .home-header .mobile-lang-toggle {
+    border-color: rgba(201, 154, 61, 0.45);
+    background: rgba(201, 154, 61, 0.08);
+    color: var(--gold-light);
+  }
+
+  .home-header .mobile-lang-toggle:hover,
+  .home-header .mobile-lang-toggle:focus-visible {
+    background: rgba(201, 154, 61, 0.16);
+    border-color: var(--gold-light);
     color: #fff;
   }
 
@@ -3694,6 +3761,7 @@ button:focus-visible {
 [dir="rtl"] h3,
 [dir="rtl"] .lux-title,
 [dir="rtl"] .lux-tagline,
+[dir="rtl"] .lux-partner-line,
 [dir="rtl"] .category-card-name,
 [dir="rtl"] .category-modal-title {
   font-family: 'Tajawal', 'Manrope', sans-serif;
@@ -4068,8 +4136,8 @@ button:focus-visible {
   }
 
   .brand-lockup img {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
   }
 
   .brand-lockup strong {
@@ -4080,11 +4148,6 @@ button:focus-visible {
   .brand-lockup small {
     font-size: 6.5px;
     letter-spacing: .18em;
-  }
-
-  .home-header .brand-badge {
-    width: 38px;
-    height: 38px;
   }
 
   .intro-stats {
