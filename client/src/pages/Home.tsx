@@ -75,7 +75,9 @@ function CategoryDetailModal({ category, lang, onClose }: { category: Category |
             {/* Main products list */}
             {category.products && category.products.length > 0 && (
               <div className="category-modal-products">
-                {category.products.map((product) => <span key={product.en} className="category-modal-chip">{product[lang]}</span>)}
+                {category.products.map((product, index) => (
+                  <span key={product.en} className="category-modal-chip" style={{ animationDelay: `${Math.min(index, 10) * 28}ms` }}>{product[lang]}</span>
+                ))}
               </div>
             )}
 
@@ -86,7 +88,9 @@ function CategoryDetailModal({ category, lang, onClose }: { category: Category |
                   <div key={sub.id} className="category-modal-subsection">
                     <h4 className="subsection-title">{sub.name[lang]}</h4>
                     <div className="category-modal-products">
-                      {sub.products.map((product) => <span key={product.en} className="category-modal-chip subsection-chip">{product[lang]}</span>)}
+                      {sub.products.map((product, index) => (
+                        <span key={product.en} className="category-modal-chip subsection-chip" style={{ animationDelay: `${Math.min(index, 10) * 28}ms` }}>{product[lang]}</span>
+                      ))}
                     </div>
                   </div>
                 ))}
@@ -224,6 +228,10 @@ export default function Home() {
                 <span className="lux-partner-line lux-partner-line--white">{t("heroSupplyPartner")}</span>
               </p>
               <p className="lux-tagline">{t("heroTagline")}</p>
+              <div className="lux-b2b">
+                <span className="lux-b2b-label">{t("heroB2BLabel")}</span>
+                <p className="lux-b2b-heading">{t("heroB2BHeading")}</p>
+              </div>
               <p className="lux-sub">{t("heroSubBenefit")}</p>
               <div className="lux-badges">
                 <span className="lux-badge"><MapPin size={14} /> {t("badgeLocalSourcing")}</span>
@@ -399,7 +407,7 @@ export default function Home() {
         <section id="contact" className="contact-section section-pad"><div className="contact-intro reveal"><SectionLabel>{t("contactLabel")}</SectionLabel><h2>{t("contactHeadingLine1")}<br /><em>{t("contactHeadingLine2")}</em></h2><p>{t("contactIntro")}</p><a className="contact-email" href="mailto:mohammed@cbaingredients.com">mohammed@cbaingredients.com <ArrowIcon size={18} /></a></div><div className="contact-card reveal reveal-2"><div className="contact-card-top"><span className="contact-card-label">CBA INGREDIENTS COMPANY</span><MapPin size={22} /></div><div className="address-block"><h3>{t("addressHeading")}</h3><p>Building 5283, King Fahad ibn Abdulaziz Rd<br />1st Industrial District<br />Dammam 32234<br />Kingdom of Saudi Arabia</p></div><div className="address-meta"><span><small>{t("shortAddress")}</small><strong>EDGA5283</strong></span><span><small>{t("contactLabelSmall")}</small><a href="tel:+966508465636"><bdi>+966 50 846 5636</bdi></a></span></div><div className="contact-card-bottom"><span>{t("availableForEnquiries")}</span><span className="gold-dot" /></div></div></section>
       </main>
 
-      <footer className="site-footer"><div className="footer-brand"><img src={logoUrl} alt="CBA Ingredients" /><div><strong>CBA Ingredients</strong><span>{t("footerTagline")}</span></div></div><div className="footer-links"><Link href="/about">{t("navAbout")}</Link><button onClick={() => scrollTo("categories")}>{t("navApplications")}</button><Link href="/sustainable-supply">{t("navSustainable")}</Link><button onClick={() => scrollTo("contact")}>{t("navContact")}</button></div><div className="footer-note">© 2026 CBA Ingredients Company<br />{t("footerLocation")}</div></footer>
+      <footer className="site-footer reveal"><div className="footer-brand"><img src={logoUrl} alt="CBA Ingredients" /><div><strong>CBA Ingredients</strong><span>{t("footerTagline")}</span></div></div><div className="footer-links"><Link href="/about">{t("navAbout")}</Link><button onClick={() => scrollTo("categories")}>{t("navApplications")}</button><Link href="/sustainable-supply">{t("navSustainable")}</Link><button onClick={() => scrollTo("contact")}>{t("navContact")}</button></div><div className="footer-note">© 2026 CBA Ingredients Company<br />{t("footerLocation")}</div></footer>
     </div>
   );
 }
