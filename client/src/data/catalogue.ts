@@ -19,6 +19,7 @@ import {
   FlaskConicalIcon,
   MilkIcon,
   PaletteIcon,
+  PillIcon,
   SparklesIcon,
   WheatIcon,
 } from "lucide-react";
@@ -33,7 +34,8 @@ export type CategoryId =
   | "artificial-colours"
   | "butter"
   | "chocolate"
-  | "restaurant";
+  | "restaurant"
+  | "pharma-cosmetic";
 
 export type Localized = { en: string; ar: string };
 
@@ -41,6 +43,21 @@ export type SubSection = {
   id: string;
   name: Localized;
   products: Localized[];
+};
+
+/** One line item in a spec-sheet-style product table (packing size + origin, not just a name). */
+export type DetailedProduct = {
+  name: Localized;
+  /** Optional "(equivalent to X)" / code suffix shown under the name. */
+  equivalent?: Localized;
+  packingSize: Localized;
+  origin: Localized;
+};
+
+export type DetailedGroup = {
+  id: string;
+  name: Localized;
+  items: DetailedProduct[];
 };
 
 export type Category = {
@@ -55,6 +72,10 @@ export type Category = {
   products?: Localized[];
   /** Nested subsections within this category */
   subSections?: SubSection[];
+  /** Richer structured product data (packing size, origin) for categories sourced from a supplier spec sheet. */
+  detailedGroups?: DetailedGroup[];
+  /** Short context line shown above a detailed-groups category, e.g. regional availability. */
+  availabilityNote?: Localized;
   note?: Localized;
 };
 
@@ -69,6 +90,7 @@ const butterUrl = "/assets/cba-butter.png";
 const chocolateUrl = "/assets/cba-chocolate.jpg";
 const restaurantUrl = "/assets/cba-restaurant.jpg";
 const coffeeShopUrl = "/assets/cba-coffee-shop.jpg";
+const pharmaCosmeticUrl = "/assets/cba-pharma-cosmetic.jpg";
 
 export const categories: Category[] = [
   /* ═══════════════════════════════════════════════
@@ -326,12 +348,11 @@ export const categories: Category[] = [
     icon: DropletIcon,
     accent: "#D4A843",
     products: [
-      { en: "Butter", ar: "زبدة" },
-      { en: "Unsalted Butter", ar: "زبدة غير مملحة" },
-      { en: "Unsalted butter 82%", ar: "زبدة غير مملحة 82%" },
-      { en: "Saputo Butter", ar: "زبدة سابوتو" },
-      { en: "Crescent Margarine", ar: "مارغرين كريسنت" },
-      { en: "Vanaspati", ar: "فاناسباتي" },
+      { en: "Unsalted 82% Lactic Butter USA", ar: "زبدة لاكتيك غير مملحة 82% - أمريكية" },
+      { en: "Crossennet Margarine", ar: "مارغرين كروسينت" },
+      { en: "Unsalted 82% Sweet Whey Butter", ar: "زبدة مصل اللبن الحلو غير مملحة 82%" },
+      { en: "Blended Butter", ar: "زبدة ممزوجة" },
+      { en: "Saputo Brand Butter", ar: "زبدة سابوتو التجارية" },
     ],
   },
 
@@ -373,6 +394,142 @@ export const categories: Category[] = [
       en: "Speak with us about the ingredients your kitchen needs — we'll match you to the right categories above.",
       ar: "تحدث معنا عن المكونات التي يحتاجها مطبخك — سنساعدك في اختيار الفئات المناسبة أعلاه.",
     },
+  },
+
+  /* ═══════════════════════════════════════════════
+   * 11. PHARMACEUTICAL AND COSMETIC PRODUCTS
+   * ═══════════════════════════════════════════════ */
+  {
+    id: "pharma-cosmetic",
+    name: { en: "Pharmaceutical and cosmetic products", ar: "منتجات صيدلانية وتجميلية" },
+    shortText: { en: "Preservatives, emulsifiers & antiseptics", ar: "مواد حافظة ومستحلبات ومطهرات" },
+    description: {
+      en: "Preservatives, emulsifiers, antiseptics, and surfactants supplied for pharmaceutical and cosmetic manufacturing.",
+      ar: "مواد حافظة ومستحلبات ومطهرات وخافضات للتوتر السطحي، موردة لتصنيع المستحضرات الصيدلانية والتجميلية.",
+    },
+    image: pharmaCosmeticUrl,
+    icon: PillIcon,
+    accent: "#5C7A89",
+    availabilityNote: {
+      en: "The following products are available in Riyadh.",
+      ar: "المنتجات التالية متوفرة في الرياض.",
+    },
+    detailedGroups: [
+      {
+        id: "preservatives",
+        name: { en: "Preservatives", ar: "المواد الحافظة" },
+        items: [
+          {
+            name: { en: "DMDM Hydantoin", ar: "DMDM هيدانتوين" },
+            equivalent: { en: "equivalent to Glydant", ar: "يعادل Glydant" },
+            packingSize: { en: "25KG Drum", ar: "برميل 25 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+          {
+            name: { en: "CMIT+MIT+DMDM", ar: "CMIT+MIT+DMDM" },
+            equivalent: { en: "equivalent to lonza serve ID", ar: "يعادل lonza serve ID" },
+            packingSize: { en: "25KG Drum", ar: "برميل 25 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+          {
+            name: { en: "Phenoxyethanol", ar: "فينوكسي إيثانول" },
+            packingSize: { en: "25KG Drum", ar: "برميل 25 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+          {
+            name: { en: "Phenoxyethanol + Ethyl Hexyl Glycerine (9010)", ar: "فينوكسي إيثانول + إيثيل هكسيل جليسرين (9010)" },
+            packingSize: { en: "25KG Drum", ar: "برميل 25 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+          {
+            name: { en: "Propyl Paraben BP", ar: "بروبيل بارابين BP" },
+            packingSize: { en: "25KG Drum", ar: "برميل 25 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+          {
+            name: { en: "Propyl Paraben Sodium BP", ar: "بروبيل بارابين الصوديوم BP" },
+            packingSize: { en: "25KG Drum", ar: "برميل 25 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+          {
+            name: { en: "Methyl Paraben Sodium BP", ar: "ميثيل بارابين الصوديوم BP" },
+            packingSize: { en: "25KG Drum", ar: "برميل 25 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+        ],
+      },
+      {
+        id: "emulsifier-solubilizer",
+        name: { en: "Emulsifier / Solubilizer", ar: "مستحلب / مُذيب" },
+        items: [
+          {
+            name: { en: "PEG40 Hydrogenated Castor Oil", ar: "PEG40 زيت الخروع المهدرج" },
+            packingSize: { en: "210KG Drum", ar: "برميل 210 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+          {
+            name: { en: "Polysorbate 20", ar: "بوليسوربات 20" },
+            packingSize: { en: "220KG Drum", ar: "برميل 220 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+          {
+            name: { en: "Polysorbate 80", ar: "بوليسوربات 80" },
+            packingSize: { en: "220KG Drum", ar: "برميل 220 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+          {
+            name: { en: "Ceteareth 20", ar: "سيتيأريث 20" },
+            equivalent: { en: "equivalent to Emulgin B2", ar: "يعادل Emulgin B2" },
+            packingSize: { en: "25KG Bag", ar: "كيس 25 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+        ],
+      },
+      {
+        id: "antiseptic",
+        name: { en: "Antiseptic", ar: "مطهر" },
+        items: [
+          {
+            name: { en: "Chlorhexidine Gluconate 20% BP", ar: "كلورهيكسيدين جلوكونات 20% BP" },
+            packingSize: { en: "220KG Drum", ar: "برميل 220 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+        ],
+      },
+      {
+        id: "non-ionic-surfactant",
+        name: { en: "Non-Ionic Surfactant", ar: "خافض توتر سطحي غير أيوني" },
+        items: [
+          {
+            name: { en: "Nonylphenol-9 (NP9)", ar: "نونيل فينول-9 (NP9)" },
+            packingSize: { en: "220KG Drum", ar: "برميل 220 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+        ],
+      },
+      {
+        id: "mint",
+        name: { en: "Mint", ar: "نعناع" },
+        items: [
+          {
+            name: { en: "Menthol Crystals BP/USP", ar: "بلورات المنثول BP/USP" },
+            packingSize: { en: "25KG Drum", ar: "برميل 25 كجم" },
+            origin: { en: "Norex Flavours, India", ar: "نوركس فليفورز، الهند" },
+          },
+        ],
+      },
+      {
+        id: "nsaid",
+        name: { en: "NSAID", ar: "مضاد التهاب غير ستيرويدي (NSAID)" },
+        items: [
+          {
+            name: { en: "Methyl Salicylate BP", ar: "ميثيل ساليسيلات BP" },
+            packingSize: { en: "25KG Drum", ar: "برميل 25 كجم" },
+            origin: { en: "India", ar: "الهند" },
+          },
+        ],
+      },
+    ],
   },
 ];
 

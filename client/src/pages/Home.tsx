@@ -30,7 +30,6 @@ import {
 } from "lucide-react";
 
 const logoUrl = "/assets/cba-logo.png";
-const heroUrl = "/assets/cba-hero-ingredients.webp";
 
 function SectionLabel({ children }: { children: string }) {
   return <div className="section-label"><span className="label-line" />{children}</div>;
@@ -72,6 +71,8 @@ function CategoryDetailModal({ category, lang, onClose }: { category: Category |
               <DialogDescription className="category-modal-desc">{category.description[lang]}</DialogDescription>
             </DialogHeader>
 
+            {category.availabilityNote && <p className="category-modal-availability">{category.availabilityNote[lang]}</p>}
+
             {/* Main products list */}
             {category.products && category.products.length > 0 && (
               <div className="category-modal-products">
@@ -90,6 +91,31 @@ function CategoryDetailModal({ category, lang, onClose }: { category: Category |
                     <div className="category-modal-products">
                       {sub.products.map((product, index) => (
                         <span key={product.en} className="category-modal-chip subsection-chip" style={{ animationDelay: `${Math.min(index, 10) * 28}ms` }}>{product[lang]}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Spec-sheet style detailed groups: packing size + origin per item */}
+            {category.detailedGroups && category.detailedGroups.length > 0 && (
+              <div className="category-modal-detailed-groups">
+                {category.detailedGroups.map((group) => (
+                  <div key={group.id} className="detailed-group">
+                    <h4 className="subsection-title">{group.name[lang]}</h4>
+                    <div className="detailed-product-list">
+                      {group.items.map((item, index) => (
+                        <div key={item.name.en} className="detailed-product-card" style={{ animationDelay: `${Math.min(index, 10) * 28}ms` }}>
+                          <div className="detailed-product-name">
+                            {item.name[lang]}
+                            {item.equivalent && <span className="detailed-product-equivalent">{item.equivalent[lang]}</span>}
+                          </div>
+                          <div className="detailed-product-meta">
+                            <span><small>{translate("packingSizeLabel", lang)}</small>{item.packingSize[lang]}</span>
+                            <span><small>{translate("originLabel", lang)}</small>{item.origin[lang]}</span>
+                          </div>
+                        </div>
                       ))}
                     </div>
                   </div>
@@ -124,12 +150,17 @@ export default function Home() {
     { icon: Sparkles, title: t("principleApplicationTitle"), text: t("principleApplicationText") },
   ];
 
-  // The hero carousel only shows real photography — categories without a supplied
-  // photo (icon-tile categories) aren't included here.
-  const heroSlides = [
-    { src: heroUrl, label: t("heroSlideRawMaterials") },
-    ...categories.filter((category) => category.image).map((category) => ({ src: category.image as string, label: category.name[lang] })),
-  ];
+  // Hero carousel: a brief logo intro, then every approved category exactly
+  // once, in catalogue order. Categories without a supplied photo yet (e.g.
+  // Pharmaceutical and cosmetic products) fall back to an icon tile instead
+  // of being skipped, so every approved category is represented.
+  type HeroSlide = { kind: "logo" } | { kind: "category"; category: Category };
+  const heroSlides: HeroSlide[] = [{ kind: "logo" }, ...categories.map((category) => ({ kind: "category" as const, category }))];
+  const LOGO_SLIDE_MS = 3000;
+  const CATEGORY_SLIDE_MS = 4500;
+  // Matches the splash screen's own fixed 1.5s hold + 450ms fade-out (not
+  // imported — the splash is approved as-is and never touched by this file).
+  const SPLASH_SYNC_MS = 1950;
 
   const [openCategoryId, setOpenCategoryId] = useState<string | null>(null);
   const openCategory = categories.find((category) => category.id === openCategoryId) ?? null;
@@ -137,6 +168,11 @@ export default function Home() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center", duration: 26, direction: lang === "ar" ? "rtl" : "ltr" });
   const [selectedSlide, setSelectedSlide] = useState(0);
   const carouselPaused = useRef(false);
+  // The logo slide's autoplay timer starts counting from mount, same as the
+  // splash screen's own timer — so without this offset, most of its dwell
+  // time would silently elapse while still hidden behind the opaque splash.
+  // Added once, only to the very first timer, not on later loop-arounds.
+  const splashSyncDelayUsed = useRef(false);
 
   useScrollReveal();
 
@@ -183,26 +219,36 @@ export default function Home() {
     };
   }, []);
 
-  // Hero carousel: track the active slide and gently auto-advance.
+  // Hero carousel: track the active slide so content/dots stay in sync.
   useEffect(() => {
     if (!emblaApi) return;
     const onSelect = () => setSelectedSlide(emblaApi.selectedScrollSnap());
     emblaApi.on("select", onSelect);
     emblaApi.on("reInit", onSelect);
     onSelect();
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let timer: ReturnType<typeof setInterval> | undefined;
-    if (!reduce) {
-      timer = setInterval(() => {
-        if (!document.hidden && !carouselPaused.current) emblaApi.scrollNext();
-      }, 4200);
-    }
     return () => {
-      if (timer) clearInterval(timer);
       emblaApi.off("select", onSelect);
       emblaApi.off("reInit", onSelect);
     };
   }, [emblaApi]);
+
+  // Auto-advance with a per-slide dwell time (brief intro, longer per category
+  // so there's time to read), re-armed whenever the active slide changes —
+  // whether from autoplay itself, a dot click, or a manual swipe.
+  useEffect(() => {
+    if (!emblaApi) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+    let duration = heroSlides[selectedSlide]?.kind === "logo" ? LOGO_SLIDE_MS : CATEGORY_SLIDE_MS;
+    if (selectedSlide === 0 && !splashSyncDelayUsed.current) {
+      duration += SPLASH_SYNC_MS;
+      splashSyncDelayUsed.current = true;
+    }
+    const timer = window.setTimeout(() => {
+      if (!document.hidden && !carouselPaused.current) emblaApi.scrollNext();
+    }, duration);
+    return () => window.clearTimeout(timer);
+  }, [emblaApi, selectedSlide]);
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -252,32 +298,55 @@ export default function Home() {
               >
                 <div className="hero-carousel" ref={emblaRef}>
                   <div className="hero-carousel-track">
-                    {heroSlides.map((slide, index) => (
-                      <div className="hero-slide" key={slide.src + index}>
-                        <img
-                          src={slide.src}
-                          alt={slide.label}
-                          draggable={false}
-                          loading={index === 0 ? "eager" : "lazy"}
-                          fetchPriority={index === 0 ? "high" : "auto"}
-                        />
-                        <span className="hero-slide-label">{slide.label}</span>
-                      </div>
-                    ))}
+                    {heroSlides.map((slide, index) => {
+                      const key = slide.kind === "logo" ? "logo" : slide.category.id;
+                      const isActive = index === selectedSlide;
+                      return (
+                        <div className={`hero-slide ${slide.kind === "logo" ? "hero-slide-logo" : ""} ${isActive ? "is-active" : ""}`} key={key}>
+                          {slide.kind === "logo" ? (
+                            <div className="hero-slide-logo-stage">
+                              <img src={logoUrl} alt="CBA Ingredients" className="hero-slide-logo-img" draggable={false} loading="eager" fetchPriority="high" />
+                            </div>
+                          ) : slide.category.image ? (
+                            <img
+                              src={slide.category.image}
+                              alt={slide.category.name[lang]}
+                              draggable={false}
+                              loading={index <= 1 ? "eager" : "lazy"}
+                              fetchPriority={index <= 1 ? "high" : "auto"}
+                            />
+                          ) : (
+                            <div className="hero-slide-icon-fallback" style={{ "--card-accent": slide.category.accent } as CSSProperties}>
+                              <slide.category.icon size={56} strokeWidth={1.1} />
+                            </div>
+                          )}
+                          {slide.kind === "category" && (
+                            <div className="hero-slide-content">
+                              <span className="hero-slide-title">{slide.category.name[lang]}</span>
+                              <span className="hero-slide-sub">{slide.category.shortText[lang]}</span>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
                 <div className="hero-carousel-dots" role="tablist" aria-label="Hero images">
-                  {heroSlides.map((slide, index) => (
-                    <button
-                      key={slide.src + index}
-                      type="button"
-                      role="tab"
-                      aria-selected={index === selectedSlide}
-                      aria-label={`Show ${slide.label}`}
-                      className={index === selectedSlide ? "is-active" : ""}
-                      onClick={() => emblaApi?.scrollTo(index)}
-                    />
-                  ))}
+                  {heroSlides.map((slide, index) => {
+                    const key = slide.kind === "logo" ? "logo" : slide.category.id;
+                    const label = slide.kind === "logo" ? "CBA Ingredients" : slide.category.name[lang];
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        role="tab"
+                        aria-selected={index === selectedSlide}
+                        aria-label={`Show ${label}`}
+                        className={index === selectedSlide ? "is-active" : ""}
+                        onClick={() => emblaApi?.scrollTo(index)}
+                      />
+                    );
+                  })}
                 </div>
                 <span className="lux-frame-tag"><span className="pulse-dot" /> {t("frameTag")}</span>
               </div>

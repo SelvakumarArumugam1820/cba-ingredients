@@ -78,6 +78,8 @@ const dict = {
   },
   viewProducts: { en: "View products", ar: "عرض المنتجات" },
   requestQuote: { en: "Request a quote", ar: "اطلب عرض سعر" },
+  packingSizeLabel: { en: "Packing size", ar: "حجم العبوة" },
+  originLabel: { en: "Origin", ar: "بلد المنشأ" },
 
   // "03 / Why CBA" section
   approachLabel: { en: "03 / WHY CBA", ar: "٠٣ / لماذا سي بي إيه" },

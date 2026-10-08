@@ -1104,6 +1104,83 @@ h2 {
   border-color: rgba(201, 154, 61, .22) !important;
 }
 
+.category-modal-availability {
+  margin: 14px 28px 0;
+  padding: 10px 14px;
+  background: rgba(92, 122, 137, .08);
+  border: 1px solid rgba(92, 122, 137, .22);
+  border-radius: 6px;
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.category-modal-detailed-groups {
+  padding: 4px 28px 0;
+}
+
+.detailed-group {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.detailed-product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detailed-product-card {
+  padding: 10px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: chipIn .35s var(--ease-out) both;
+}
+
+.detailed-product-name {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.detailed-product-equivalent {
+  display: block;
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 500;
+  font-style: italic;
+  margin-top: 1px;
+}
+
+.detailed-product-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin-top: 7px;
+}
+
+.detailed-product-meta span {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.detailed-product-meta small {
+  color: var(--muted);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
 .category-modal-footer {
   padding: 22px 28px 26px;
 }
@@ -2987,6 +3064,7 @@ section[id] {
   flex: 0 0 100%;
   min-width: 0;
   height: 100%;
+  overflow: hidden;
 }
 
 .hero-slide img {
@@ -2996,23 +3074,92 @@ section[id] {
   object-position: center 68%;
   display: block;
   filter: saturate(1.05) brightness(1.06) contrast(1.02);
+  transform: scale(1.08);
+  transition: transform 1.2s var(--ease-out);
 }
 
-.hero-slide-label {
+.hero-slide.is-active img {
+  transform: scale(1);
+}
+
+/* Slide 1: company logo intro, shown before the category slides */
+.hero-slide-logo-stage {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(1000px 560px at 50% 40%, #16375c 0%, #0b2138 55%, var(--navy-3) 100%);
+}
+
+.hero-slide-logo-stage .hero-slide-logo-img {
+  width: clamp(96px, 28%, 180px);
+  height: auto;
+  object-fit: contain;
+  opacity: 0;
+  transform: scale(.85);
+  transition: opacity .9s var(--ease-out), transform .9s var(--ease-out);
+  filter: drop-shadow(0 0 32px rgba(201, 154, 61, .35));
+}
+
+.hero-slide-logo.is-active .hero-slide-logo-img {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Fallback tile for an approved category without a supplied photo yet */
+.hero-slide-icon-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, .85);
+  background-color: var(--card-accent, var(--ink));
+  background-image: linear-gradient(160deg, color-mix(in srgb, var(--card-accent, var(--ink)) 78%, white), var(--card-accent, var(--ink)));
+  transform: scale(1.08);
+  transition: transform 1.2s var(--ease-out);
+}
+
+.hero-slide.is-active .hero-slide-icon-fallback {
+  transform: scale(1);
+}
+
+.hero-slide-content {
   position: absolute;
   z-index: 3;
-  left: 18px;
-  bottom: 40px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(10, 32, 54, .62);
-  border: 1px solid rgba(201, 154, 61, .4);
-  color: var(--gold-light);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  backdrop-filter: blur(3px);
+  /* The frame's bottom-left corner is heavily rounded (100px, vs 18px on the
+     other corners) — asymmetric inset keeps text clear of that curve. */
+  left: 46px;
+  right: 20px;
+  bottom: 38px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .55s var(--ease-out) .15s, transform .55s var(--ease-out) .15s;
+}
+
+.hero-slide.is-active .hero-slide-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-slide-title {
+  color: #fff;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.15;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, .35);
+}
+
+.hero-slide-sub {
+  color: rgba(255, 255, 255, .82);
+  font-size: 11.5px;
+  letter-spacing: .02em;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, .3);
 }
 
 .hero-carousel-dots {
@@ -3130,9 +3277,20 @@ section[id] {
     aspect-ratio: 4 / 3.4;
   }
 
-  .hero-slide-label {
-    bottom: 38px;
-    font-size: 9px;
+  .hero-slide-content {
+    bottom: 32px;
+  }
+
+  .hero-slide-title {
+    font-size: 19px;
+  }
+
+  .hero-slide-sub {
+    font-size: 10.5px;
+  }
+
+  .hero-slide-logo-img {
+    width: clamp(84px, 30%, 140px);
   }
 }
 
@@ -3865,9 +4023,8 @@ button:focus-visible {
   left: 0;
 }
 
-[dir="rtl"] .hero-slide-label {
-  left: auto;
-  right: 18px;
+[dir="rtl"] .hero-slide-content {
+  text-align: right;
 }
 
 [dir="rtl"] .lux-frame-tag {
@@ -3910,6 +4067,11 @@ button:focus-visible {
 }
 
 [dir="rtl"] .category-modal-subsections {
+  text-align: right;
+}
+
+[dir="rtl"] .category-modal-availability,
+[dir="rtl"] .category-modal-detailed-groups {
   text-align: right;
 }
 
