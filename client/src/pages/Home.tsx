@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import { Link } from "wouter";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import SiteHeader from "@/components/SiteHeader";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useLanguage, type Lang } from "@/contexts/LanguageContext";
@@ -126,8 +127,8 @@ function CategoryDetailModal({ category, lang, onClose }: { category: Category |
             {category.note && <p className="category-modal-note">{category.note[lang]}</p>}
 
             <DialogFooter className="category-modal-footer">
-              <a className="button-primary" href={`mailto:mohammed@cbaingredients.com?subject=${encodeURIComponent(`Enquiry: ${category.name.en}`)}`}>{translate("requestQuote", lang)} <ArrowIcon size={16} /></a>
-              <a className="category-cta-call" href="tel:+966508465636"><Phone size={15} /> <bdi>+966 50 846 5636</bdi></a>
+              <a className="button-primary" href={`mailto:alimansour@cbaingredients.com?subject=${encodeURIComponent(`Enquiry: ${category.name.en}`)}`}>{translate("requestQuote", lang)} <ArrowIcon size={16} /></a>
+              <a className="category-cta-call" href="tel:+966556585552"><Phone size={15} /> <bdi>+966 55 658 5552</bdi></a>
             </DialogFooter>
           </>
         )}
@@ -149,6 +150,40 @@ export default function Home() {
     { icon: PackageCheck, title: t("principleSupplyTitle"), text: t("principleSupplyText") },
     { icon: Sparkles, title: t("principleApplicationTitle"), text: t("principleApplicationText") },
   ];
+
+  // Grounded in real site content (categories, segments, contact details) — no invented claims.
+  const faqs = [
+    { q: t("faqQ1"), a: t("faqA1") },
+    { q: t("faqQ2"), a: t("faqA2") },
+    { q: t("faqQ3"), a: t("faqA3") },
+    { q: t("faqQ4"), a: t("faqA4") },
+    { q: t("faqQ5"), a: t("faqA5") },
+    { q: t("faqQ6"), a: t("faqA6") },
+  ];
+
+  // FAQPage structured data, kept in sync with the visible language so it
+  // never describes content the page isn't actually showing.
+  useEffect(() => {
+    const scriptId = "faq-structured-data";
+    let script = document.getElementById(scriptId) as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement("script");
+      script.id = scriptId;
+      script.type = "application/ld+json";
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
+    });
+    return () => { script?.remove(); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   // Hero carousel: a brief logo intro, then every approved category exactly
   // once, in catalogue order. Categories without a supplied photo yet (e.g.
@@ -175,6 +210,11 @@ export default function Home() {
   const splashSyncDelayUsed = useRef(false);
 
   useScrollReveal();
+  useDocumentMeta({
+    title: "CBA Ingredients — Food Ingredients & Raw Materials Supplier in Saudi Arabia",
+    description: "B2B supplier of dairy, bakery, beverage, flavour, colour, butter, and pharmaceutical/cosmetic ingredients in Saudi Arabia, serving food manufacturers and international customers.",
+    path: "/",
+  });
 
   useEffect(() => {
     const hash = window.location.hash.replace("#", "");
@@ -257,7 +297,7 @@ export default function Home() {
   return (
     <div className="site-shell">
       <div className="top-strip">
-        <div className="top-strip-inner"><span>{t("topStripPartner")}</span><span className="top-strip-dot" /><span>{t("topStripTagline")}</span><a href="mailto:mohammed@cbaingredients.com">mohammed@cbaingredients.com</a></div>
+        <div className="top-strip-inner"><span>{t("topStripPartner")}</span><span className="top-strip-dot" /><span>{t("topStripTagline")}</span><a href="mailto:alimansour@cbaingredients.com">alimansour@cbaingredients.com</a></div>
       </div>
 
       <SiteHeader variant="home" active={activeSection} />
@@ -473,7 +513,10 @@ export default function Home() {
         <section id="approach" className="approach-section section-pad"><div className="approach-head reveal"><SectionLabel>{t("approachLabel")}</SectionLabel><h2>{t("approachHeadingLine1")}<br /><em>{t("approachHeadingLine2")}</em></h2><p>{t("approachIntro")}</p></div><div className="principles-grid">{principles.map((principle, index) => <motion.article key={principle.title} className="principle-card" initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.45, delay: index * 0.08, ease: [0.23, 1, 0.32, 1] }}><span className="principle-index">0{index + 1}</span><principle.icon size={25} strokeWidth={1.4} /><h3>{principle.title}</h3><p>{principle.text}</p></motion.article>)}</div><div className="approach-banner reveal"><div><span className="banner-kicker">{t("bannerKicker")}</span><h3>{t("bannerHeadingLine1")}<br />{t("bannerHeadingLine2")}</h3></div><button className="button-light" onClick={() => scrollTo("contact")}>{t("startConversation")} <ArrowIcon size={17} /></button></div></section>
 
         {/* ─── 04 / CONTACT ─── */}
-        <section id="contact" className="contact-section section-pad"><div className="contact-intro reveal"><SectionLabel>{t("contactLabel")}</SectionLabel><h2>{t("contactHeadingLine1")}<br /><em>{t("contactHeadingLine2")}</em></h2><p>{t("contactIntro")}</p><a className="contact-email" href="mailto:mohammed@cbaingredients.com">mohammed@cbaingredients.com <ArrowIcon size={18} /></a></div><div className="contact-card reveal reveal-2"><div className="contact-card-top"><span className="contact-card-label">CBA INGREDIENTS COMPANY</span><MapPin size={22} /></div><div className="address-block"><h3>{t("addressHeading")}</h3><p>Building 5283, King Fahad ibn Abdulaziz Rd<br />1st Industrial District<br />Dammam 32234<br />Kingdom of Saudi Arabia</p></div><div className="address-meta"><span><small>{t("shortAddress")}</small><strong>EDGA5283</strong></span><span><small>{t("contactLabelSmall")}</small><a href="tel:+966508465636"><bdi>+966 50 846 5636</bdi></a></span></div><div className="contact-card-bottom"><span>{t("availableForEnquiries")}</span><span className="gold-dot" /></div></div></section>
+        <section id="contact" className="contact-section section-pad"><div className="contact-intro reveal"><SectionLabel>{t("contactLabel")}</SectionLabel><h2>{t("contactHeadingLine1")}<br /><em>{t("contactHeadingLine2")}</em></h2><p>{t("contactIntro")}</p><a className="contact-email" href="mailto:alimansour@cbaingredients.com">alimansour@cbaingredients.com <ArrowIcon size={18} /></a></div><div className="contact-card reveal reveal-2"><div className="contact-card-top"><span className="contact-card-label">CBA INGREDIENTS COMPANY</span><MapPin size={22} /></div><div className="address-block"><h3>{t("addressHeading")}</h3><p>Building 5283, King Fahad ibn Abdulaziz Rd<br />1st Industrial District<br />Dammam 32234<br />Kingdom of Saudi Arabia</p></div><div className="address-meta"><span><small>{t("shortAddress")}</small><strong>EDGA5283</strong></span><span><small>{t("contactLabelSmall")}</small><a href="tel:+966556585552"><bdi>+966 55 658 5552</bdi></a></span><span><small>{t("whatsappLabel")}</small><a href="https://wa.me/966556585552" target="_blank" rel="noopener noreferrer"><bdi>+966 55 658 5552</bdi></a></span></div><div className="contact-card-bottom"><span>{t("availableForEnquiries")}</span><span className="gold-dot" /></div></div></section>
+
+        {/* ─── 05 / FAQ ─── */}
+        <section id="faq" className="faq-section section-pad"><div className="faq-head reveal"><SectionLabel>{t("faqLabel")}</SectionLabel><h2>{t("faqHeadingLine1")}<br /><em>{t("faqHeadingLine2")}</em></h2></div><div className="faq-list">{faqs.map((item, index) => <motion.div className="faq-item" key={item.q} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }} transition={{ duration: 0.4, delay: index * 0.05, ease: [0.23, 1, 0.32, 1] }}><h3>{item.q}</h3><p>{item.a}</p></motion.div>)}</div></section>
       </main>
 
       <footer className="site-footer reveal"><div className="footer-brand"><img src={logoUrl} alt="CBA Ingredients" /><div><strong>CBA Ingredients</strong><span>{t("footerTagline")}</span></div></div><div className="footer-links"><Link href="/about">{t("navAbout")}</Link><button onClick={() => scrollTo("categories")}>{t("navApplications")}</button><Link href="/sustainable-supply">{t("navSustainable")}</Link><button onClick={() => scrollTo("contact")}>{t("navContact")}</button></div><div className="footer-note">© 2026 CBA Ingredients Company<br />{t("footerLocation")}</div></footer>

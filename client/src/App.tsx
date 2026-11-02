@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import SplashScreen from "./components/SplashScreen";
+import WhatsAppButton from "./components/WhatsAppButton";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import About from "./pages/About";
@@ -16,5 +17,5 @@ function Router() {
 }
 
 export default function App() {
-  return <ErrorBoundary><LanguageProvider><ThemeProvider defaultTheme="light"><TooltipProvider><Toaster /><SplashScreen /><Router /></TooltipProvider></ThemeProvider></LanguageProvider></ErrorBoundary>;
+  return <ErrorBoundary><LanguageProvider><ThemeProvider defaultTheme="light"><TooltipProvider><Toaster /><SplashScreen /><Router /><WhatsAppButton /></TooltipProvider></ThemeProvider></LanguageProvider></ErrorBoundary>;
 }

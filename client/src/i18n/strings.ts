@@ -114,12 +114,13 @@ const dict = {
   contactHeadingLine1: { en: "Let's make", ar: "لنصنع" },
   contactHeadingLine2: { en: "something better.", ar: "شيئًا أفضل." },
   contactIntro: {
-    en: "Tell us what you are sourcing, formulating, or trying to improve. Mohammed will get back to you directly.",
-    ar: "أخبرنا بما تسعى لتوريده أو تركيبه أو تحسينه، وسيتواصل معك محمد مباشرة.",
+    en: "Tell us what you are sourcing, formulating, or trying to improve. Our team will get back to you directly.",
+    ar: "أخبرنا بما تسعى لتوريده أو تركيبه أو تحسينه، وسيتواصل معك فريقنا مباشرة.",
   },
   addressHeading: { en: "Saudi National Address", ar: "العنوان الوطني السعودي" },
   shortAddress: { en: "Short address", ar: "العنوان المختصر" },
   contactLabelSmall: { en: "Contact", ar: "التواصل" },
+  whatsappLabel: { en: "WhatsApp", ar: "واتساب" },
   availableForEnquiries: { en: "Available for business enquiries", ar: "متاحون للاستفسارات التجارية" },
 
   // Experience & Expertise section
@@ -146,6 +147,41 @@ const dict = {
   expFinalP: {
     en: "At CBA Ingredients, we aim to build long-term customer relationships by providing dependable sourcing solutions and responsive service.",
     ar: "في سي بي إيه للمكونات، نهدف إلى بناء علاقات طويلة الأمد مع العملاء من خلال تقديم حلول توريد يُعتمد عليها وخدمة سريعة الاستجابة.",
+  },
+
+  // FAQ section (AEO: real, grounded answers — no invented claims)
+  faqLabel: { en: "05 / FREQUENTLY ASKED QUESTIONS", ar: "٠٥ / الأسئلة الشائعة" },
+  faqHeadingLine1: { en: "Common questions,", ar: "أسئلة شائعة،" },
+  faqHeadingLine2: { en: "answered clearly.", ar: "بإجابات واضحة." },
+  faqQ1: { en: "What ingredients does CBA Ingredients supply?", ar: "ما هي المكونات التي توفرها سي بي إيه للمكونات؟" },
+  faqA1: {
+    en: "We supply dairy ingredients, bakery ingredients, beverage functional ingredients, flavours, natural and artificial colours, butter, coffee shop ingredients, chocolate ingredients, and pharmaceutical/cosmetic raw materials, alongside general kitchen-ready supply for restaurants.",
+    ar: "نوفّر مكونات الألبان، ومكونات المخابز، والمكونات الوظيفية للمشروبات، والنكهات، والألوان الطبيعية والاصطناعية، والزبدة، ومكونات المقاهي، ومكونات الشوكولاتة، والمواد الخام الصيدلانية والتجميلية، بالإضافة إلى توريد جاهز لمطابخ المطاعم.",
+  },
+  faqQ2: { en: "Where is CBA Ingredients based?", ar: "أين يقع مقر سي بي إيه للمكونات؟" },
+  faqA2: {
+    en: "We are based in Dammam, Saudi Arabia, and supply food businesses across the Kingdom, with sourcing support for international B2B customers as well.",
+    ar: "يقع مقرنا في الدمام، المملكة العربية السعودية، ونورّد منشآت الأغذية في جميع أنحاء المملكة، مع دعم التوريد لعملاء الأعمال الدوليين أيضًا.",
+  },
+  faqQ3: { en: "Which businesses do you work with?", ar: "ما هي المنشآت التي تتعاملون معها؟" },
+  faqA3: {
+    en: "We work with restaurants, chain restaurants, coffee shops, fast food outlets, hotels, catering services, cloud kitchens, bakeries, and food manufacturers.",
+    ar: "نتعامل مع المطاعم وسلاسل المطاعم والمقاهي ومنافذ الوجبات السريعة والفنادق وخدمات التموين والمطابخ السحابية والمخابز ومصنّعي الأغذية.",
+  },
+  faqQ4: { en: "How do I request a quote?", ar: "كيف أطلب عرض سعر؟" },
+  faqA4: {
+    en: "Tap any ingredient category on this site to see what we stock, then use \"Request a quote\" to email us directly, or reach us by phone or WhatsApp.",
+    ar: "اضغط على أي فئة مكونات في هذا الموقع لعرض ما نوفره، ثم استخدم زر \"اطلب عرض سعر\" لمراسلتنا مباشرة عبر البريد الإلكتروني، أو تواصل معنا هاتفيًا أو عبر واتساب.",
+  },
+  faqQ5: { en: "Can I contact CBA Ingredients on WhatsApp?", ar: "هل يمكنني التواصل مع سي بي إيه للمكونات عبر واتساب؟" },
+  faqA5: {
+    en: "Yes — use the WhatsApp button on this site or message us directly at +966 55 658 5552.",
+    ar: "نعم — استخدم زر واتساب في هذا الموقع أو راسلنا مباشرة على الرقم ‎+966 55 658 5552.",
+  },
+  faqQ6: { en: "Does CBA Ingredients supply outside Saudi Arabia?", ar: "هل توفر سي بي إيه للمكونات خارج المملكة العربية السعودية؟" },
+  faqA6: {
+    en: "Saudi Arabia is our primary market, and we also support international B2B enquiries — contact us to discuss your requirements.",
+    ar: "المملكة العربية السعودية هي سوقنا الأساسي، كما ندعم استفسارات العملاء الدوليين من الشركات — تواصل معنا لمناقشة متطلباتك.",
   },
 
   // Footer

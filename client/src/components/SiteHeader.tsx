@@ -5,7 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { translate } from "@/i18n/strings";
 
 const logoUrl = "/assets/cba-logo.png";
-const ENQUIRY_HREF = "mailto:mohammed@cbaingredients.com?subject=Ingredient enquiry";
+const ENQUIRY_HREF = "mailto:alimansour@cbaingredients.com?subject=Ingredient enquiry";
 
 type SiteHeaderProps = {
   /** "home" gets the dark navy shelf; "inner" gets the light page header. */
