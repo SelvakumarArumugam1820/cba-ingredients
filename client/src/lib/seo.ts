@@ -23,7 +23,7 @@ export const ROUTE_META = {
   home: {
     path: "/",
     title: "CBA Ingredients | Food Ingredients & Raw Materials Supplier in Saudi Arabia",
-    description: "CBA Ingredients is a Saudi-based B2B supplier of food ingredients and raw materials — dairy, bakery, beverage, flavours, colours, butter, and pharmaceutical/cosmetic ingredients — based in Dammam and serving Saudi Arabia and international customers.",
+    description: "CBA Ingredients (Dammam, Saudi Arabia) supplies dairy ingredients, butter, margarine, blended and whey butter, flavours, colours and bakery ingredients.",
     name: "Home",
     lastmod: "2026-11-03",
   },
