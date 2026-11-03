@@ -1,8 +1,7 @@
 /* Provenance Ledger style: shared route shell keeps every CBA page calm, editorial, and navigation-first. */
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
+import ScrollManager from "./components/ScrollManager";
 import SplashScreen from "./components/SplashScreen";
 import WhatsAppButton from "./components/WhatsAppButton";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -17,5 +16,5 @@ function Router() {
 }
 
 export default function App() {
-  return <ErrorBoundary><LanguageProvider><ThemeProvider defaultTheme="light"><TooltipProvider><Toaster /><SplashScreen /><Router /><WhatsAppButton /></TooltipProvider></ThemeProvider></LanguageProvider></ErrorBoundary>;
+  return <ErrorBoundary><LanguageProvider><ThemeProvider defaultTheme="light"><SplashScreen /><ScrollManager /><Router /><WhatsAppButton /></ThemeProvider></LanguageProvider></ErrorBoundary>;
 }

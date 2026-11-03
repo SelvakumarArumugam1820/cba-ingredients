@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-const SITE_URL = "https://cbaingredients.com";
+import { SITE_URL } from "@/lib/seo";
 
 type DocumentMetaConfig = {
   title: string;

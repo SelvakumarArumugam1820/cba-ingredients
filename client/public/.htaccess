@@ -1,0 +1,32 @@
+# Apache / LiteSpeed (Hostinger) config for the static build in dist/public.
+# Mirrors vercel.json: one canonical URL per page, real 404s, caching.
+Options -MultiViews -Indexes
+DirectorySlash Off
+RewriteEngine On
+
+# Canonical host: HTTPS, no www.
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://cbaingredients.com%{REQUEST_URI} [L,R=301]
+
+# Pages: drop the trailing slash, then serve each route's prerendered file.
+RewriteRule ^(about|sustainable-supply)/$ /$1 [L,R=301]
+RewriteRule ^(about|sustainable-supply)$ /$1/index.html [L]
+
+# Anything that isn't a real file gets the noindex 404 page with a 404 status.
+ErrorDocument 404 /404.html
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript application/json image/svg+xml
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType image/png "access plus 7 days"
+  ExpiresByType image/jpeg "access plus 7 days"
+  ExpiresByType image/webp "access plus 7 days"
+  ExpiresByType image/x-icon "access plus 7 days"
+</IfModule>

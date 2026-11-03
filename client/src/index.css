@@ -1,5 +1,4 @@
 /* Provenance Ledger style: ink navy framing, saffron gold navigation, editorial type, offset layouts, tactile food imagery, restrained motion. */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Manrope:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -8,7 +7,7 @@
   --ink-deep: #0A2036;
   --paper: #F7F5EF;
   --sand: #ECE7DA;
-  --muted: #66737A;
+  --muted: #5B676E;
   --gold: #C99A3D;
   --gold-light: #E4C47A;
   --line: rgba(17, 45, 74, .16);
@@ -2584,7 +2583,7 @@ h2 {
 }
 
 .inner-hero:before {
-  content: 'SOURCE  →  APPLICATION  →  SUPPLY';
+  content: attr(data-label);
   position: absolute;
   top: 24px;
   left: 80px;
@@ -2608,7 +2607,7 @@ h2 {
 }
 
 .sustain-hero:before {
-  content: 'SOURCE  →  COORDINATE  →  DELIVER  →  IMPROVE';
+  content: attr(data-label);
   position: absolute;
   top: 30px;
   left: max(80px, calc((100vw - 1120px)/2));
@@ -2630,7 +2629,7 @@ h2 {
 }
 
 .sustain-intro .sustain-photo:after {
-  content: 'MATERIAL / NATURAL INPUTS';
+  content: attr(data-label);
   position: absolute;
   top: 18px;
   right: 18px;
@@ -2743,7 +2742,7 @@ body,
 }
 
 section[id] {
-  scroll-margin-top: 24px;
+  scroll-margin-top: calc(var(--header-h, 0px) + 20px);
 }
 
 @media (max-width: 620px) {
@@ -2756,7 +2755,7 @@ section[id] {
 
 /* Products section: keep the active product panel in view on stacked layouts and give each category a clear contact CTA. */
 #category-detail {
-  scroll-margin-top: 16px;
+  scroll-margin-top: calc(var(--header-h, 0px) + 16px);
 }
 
 .category-cta {
@@ -3278,16 +3277,27 @@ section[id] {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 7px;
+  gap: 17px;
 }
 
 .hero-carousel-dots button {
+  position: relative;
   width: 7px;
   height: 7px;
   padding: 0;
   border-radius: 999px;
   background: rgba(255, 255, 255, .38);
   transition: width .3s var(--ease-out), background .3s;
+}
+
+/* Invisible 24px tap target around each 7px dot (WCAG 2.5.8 target size). */
+.hero-carousel-dots button::before {
+  content: '';
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 24px;
+  height: 24px;
+  transform: translate(-50%, -50%);
 }
 
 .hero-carousel-dots button.is-active {
@@ -3807,7 +3817,7 @@ button:focus-visible {
   }
 
   .category-row {
-    scroll-margin-top: 14px;
+    scroll-margin-top: calc(var(--header-h, 0px) + 14px);
   }
 
   .category-detail--inline {
@@ -4735,4 +4745,203 @@ button:focus-visible {
 
 [dir="rtl"] .intro-stat {
   align-items: flex-start;
+}
+/* Desktop hero (≥1181px only — tablet/mobile untouched): equal 50/50 columns,
+   larger copy type, and an image frame that stretches to the full height of
+   the copy block (the carousel is absolutely positioned inside it and its
+   slides use object-fit: cover, so nothing distorts). */
+@media (min-width: 1181px) {
+  .lux-hero-inner {
+    gap: 56px;
+    padding-top: 56px;
+    padding-bottom: 60px;
+  }
+
+  .lux-title {
+    font-size: clamp(56px, 4.6vw, 70px);
+  }
+
+  .lux-partner-line {
+    font-size: clamp(29px, 2.3vw, 34px);
+  }
+
+  .lux-tagline {
+    font-size: clamp(25px, 1.9vw, 28px);
+  }
+
+  .lux-b2b-heading {
+    max-width: 640px;
+    font-size: 21px;
+  }
+
+  .lux-sub {
+    max-width: 640px;
+    font-size: 16px;
+  }
+
+  .lux-badge {
+    font-size: 11px;
+  }
+}
+
+/* Two-column hero (941px+, where the grid isn't stacked): balance applies at
+   every desktop/laptop width, not just ≥1181px. */
+@media (min-width: 941px) {
+  .lux-hero-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .lux-hero-copy {
+    align-self: center;
+  }
+
+  .lux-hero-media {
+    display: flex;
+  }
+
+  .lux-frame {
+    flex: 1;
+    aspect-ratio: auto;
+    min-height: 520px;
+  }
+}
+
+/* Mobile menu language switch: the dropdown's generic `.main-nav button`
+   colour and `border-bottom: 0` rules were overriding `.is-active`, so EN and
+   العربية looked identical until a tap's hover state made one look selected.
+   Mark the active language explicitly, the same way desktop does. */
+@media (max-width: 900px) {
+  .main-nav .lang-switch button.is-active {
+    color: var(--ink);
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .home-header .main-nav .lang-switch button.is-active {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold-light);
+  }
+}
+
+/* About + Sustainable Supply desktop rhythm (≥901px; mobile untouched).
+   These sections inherited the homepage's 84px top/bottom `.section-pad`,
+   which stacked into ~168px of blank space between neighbours. */
+@media (min-width: 901px) {
+  .about-story,
+  .sustain-intro,
+  .audience-section>.section-pad,
+  .about-values,
+  .principles-dark,
+  .supply-loop {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  /* Closing CTA: one heading + one button doesn't need a 340px band. */
+  .page-cta {
+    padding-top: 52px;
+    padding-bottom: 56px;
+    align-items: center;
+  }
+
+  .page-cta h2 {
+    margin-top: 16px;
+  }
+
+  .audience-head,
+  .principles-dark-head {
+    margin-bottom: 36px;
+  }
+
+  .values-layout {
+    margin-top: 32px;
+    align-items: start;
+  }
+
+  /* Keep the short values intro beside the list as it scrolls, instead of
+     leaving its column empty below the heading. */
+  .values-layout>div:first-child {
+    position: sticky;
+    top: calc(var(--header-h, 0px) + 32px);
+  }
+
+  .value-row {
+    min-height: 0;
+    padding: 22px 0;
+  }
+
+  .loop-copy>p {
+    max-width: 420px;
+  }
+
+  .loop-diagram {
+    height: 380px;
+  }
+}
+
+/* Footer credits: full-width last row under brand / links / copyright. */
+.site-footer {
+  flex-wrap: wrap;
+}
+
+.footer-credits {
+  flex: 1 0 100%;
+  order: 10;
+  margin: 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.footer-credits a {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(201, 154, 61, .55);
+  text-underline-offset: 3px;
+  transition: color .2s, text-decoration-color .2s;
+}
+
+.footer-credits a:hover {
+  color: var(--gold);
+  text-decoration-color: currentColor;
+}
+
+.footer-credits a:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (max-width: 900px) {
+  .footer-credits {
+    padding-top: 16px;
+    /* Clear the floating WhatsApp button (56px + 20px offset) so it never
+       covers the credit links at the very bottom of the page. */
+    padding-bottom: 64px;
+  }
+}
+
+/* Keep the footer at the very bottom even when a page (e.g. 404) is shorter
+   than the viewport. */
+.site-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.site-shell>main {
+  flex: 1 0 auto;
+}
+
+.site-shell>.site-footer {
+  width: 100%;
+}
+
+/* Wrap as "Designed & Developed by" / "CBAingredients & GroInnovative". */
+.footer-credits-names {
+  white-space: nowrap;
 }

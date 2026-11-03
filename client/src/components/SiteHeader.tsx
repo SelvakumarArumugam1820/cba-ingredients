@@ -1,5 +1,6 @@
-import { useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { Link, useLocation } from "wouter";
+import { goToHomeSection } from "@/lib/sectionNav";
 import { ArrowUpRight, ArrowUpLeft, Languages, Menu, X } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translate } from "@/i18n/strings";
@@ -17,7 +18,8 @@ type SiteHeaderProps = {
 
 export default function SiteHeader({ variant = "inner", active }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
+  const stickyRef = useRef<HTMLElement | null>(null);
   const { lang, setLang } = useLanguage();
   const t = (key: Parameters<typeof translate>[0]) => translate(key, lang);
   const ArrowIcon = lang === "ar" ? ArrowUpLeft : ArrowUpRight;
@@ -54,31 +56,41 @@ export default function SiteHeader({ variant = "inner", active }: SiteHeaderProp
 
   const close = () => setMenuOpen(false);
 
+  // Home sections ("" = top). On Home: push "/#id" and scroll in place.
+  // Elsewhere: client-side route to "/#id"; ScrollManager scrolls on arrival.
   const goToSection = (id: string) => (event: MouseEvent) => {
     close();
-    // On the home page, intercept and smooth-scroll. Elsewhere let the browser
-    // follow "/#id" — Home scrolls to the hash target on mount.
-    if (window.location.pathname === "/") {
-      event.preventDefault();
-      window.history.replaceState(null, "", `/#${id}`);
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    event.preventDefault();
+    if (window.location.pathname === "/") goToHomeSection(id);
+    else navigate(id ? `/#${id}` : "/");
   };
 
-  const onBrandClick = (event: MouseEvent) => {
-    close();
-    if (window.location.pathname === "/") {
-      event.preventDefault();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
+  // Publish the sticky header's height so section anchors (scroll-margin-top)
+  // land just below it at every breakpoint.
+  useEffect(() => {
+    const el = stickyRef.current;
+    if (!el) return;
+    const update = () => {
+      const pos = getComputedStyle(el).position;
+      const height = pos === "sticky" || pos === "fixed" ? el.getBoundingClientRect().height : 0;
+      document.documentElement.style.setProperty("--header-h", `${Math.round(height)}px`);
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    window.addEventListener("resize", update);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, [variant]);
 
   const header = (
-    <header className={`site-header ${variant === "home" ? "home-header" : "page-header"}`}>
-      <Link href="/" className="brand-lockup" aria-label="CBA Ingredients home" onClick={onBrandClick}>
-        <span className="brand-badge"><img src={logoUrl} alt="CBA Ingredients logo" /></span>
+    <header ref={variant === "home" ? undefined : stickyRef} className={`site-header ${variant === "home" ? "home-header" : "page-header"}`}>
+      <a href="/" className="brand-lockup" onClick={goToSection("")}>
+        <span className="brand-badge"><img src={logoUrl} alt="CBA Ingredients logo" width={512} height={512} /></span>
         <span><strong>CBA</strong><small>INGREDIENTS</small></span>
-      </Link>
+      </a>
 
       {/* Mobile-only controls: a one-tap language toggle beside the hamburger,
           so switching language never requires opening the menu. Wrapped
@@ -91,7 +103,7 @@ export default function SiteHeader({ variant = "inner", active }: SiteHeaderProp
           type="button"
           className="mobile-lang-toggle"
           onClick={() => setLang(lang === "en" ? "ar" : "en")}
-          aria-label={lang === "en" ? "Switch to Arabic" : "التبديل إلى الإنجليزية"}
+          aria-label={lang === "en" ? "AR – Switch to Arabic" : "EN – التبديل إلى الإنجليزية"}
         >
           <Languages size={15} />
           {lang === "en" ? "AR" : "EN"}
@@ -110,15 +122,15 @@ export default function SiteHeader({ variant = "inner", active }: SiteHeaderProp
       </div>
 
       <nav id="primary-nav" className={`main-nav ${menuOpen ? "is-open" : ""}`} aria-label="Main navigation">
-        <Link href="/" className={active === "home" ? "active-page" : undefined} onClick={close}>{t("navHome")}</Link>
+        <a href="/" className={active === "home" ? "active-page" : undefined} onClick={goToSection("")}>{t("navHome")}</a>
         <Link href="/about" className={active === "about" ? "active-page" : undefined} onClick={close}>{t("navAbout")}</Link>
         <a href="/#categories" className={active === "applications" ? "active-page" : undefined} onClick={goToSection("categories")}>{t("navApplications")}</a>
         <Link href="/sustainable-supply" className={active === "sustainable" ? "active-page" : undefined} onClick={close}>{t("navSustainable")}</Link>
         <a href="/#contact" className={active === "contact" ? "active-page" : undefined} onClick={goToSection("contact")}>{t("navContact")}</a>
         <div className="lang-switch" role="group" aria-label="Language">
-          <button type="button" className={lang === "en" ? "is-active" : ""} onClick={() => setLang("en")}>EN</button>
+          <button type="button" className={lang === "en" ? "is-active" : ""} aria-pressed={lang === "en"} onClick={() => setLang("en")}>EN</button>
           <span className="lang-switch-divider" aria-hidden="true">|</span>
-          <button type="button" className={lang === "ar" ? "is-active" : ""} onClick={() => setLang("ar")}>العربية</button>
+          <button type="button" className={lang === "ar" ? "is-active" : ""} aria-pressed={lang === "ar"} onClick={() => setLang("ar")}>العربية</button>
         </div>
         <a className="nav-cta" href={ENQUIRY_HREF} onClick={close}>{t("navEnquiry")} <ArrowIcon size={16} /></a>
       </nav>
@@ -129,7 +141,7 @@ export default function SiteHeader({ variant = "inner", active }: SiteHeaderProp
 
   return (
     <>
-      {variant === "home" ? <div className="home-header-wrap">{header}</div> : header}
+      {variant === "home" ? <div className="home-header-wrap" ref={(el) => { stickyRef.current = el; }}>{header}</div> : header}
       {backdrop}
     </>
   );

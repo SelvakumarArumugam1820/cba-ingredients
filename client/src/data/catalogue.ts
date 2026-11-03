@@ -80,17 +80,17 @@ export type Category = {
 };
 
 /* ─── Image paths ─── */
-const dairyUrl = "/assets/cba-dairy-icecream.webp";
-const beverageFunctionalUrl = "/assets/cba-beverage-functional.png";
-const bakeryUrl = "/assets/cba-bakery-spices.webp";
-const flavoursUrl = "/assets/cba-flavours.png";
-const naturalColoursUrl = "/assets/cba-natural-colours.png";
-const artificialColoursUrl = "/assets/cba-artificial-colours.png";
-const butterUrl = "/assets/cba-butter.png";
-const chocolateUrl = "/assets/cba-chocolate.jpg";
-const restaurantUrl = "/assets/cba-restaurant.jpg";
-const coffeeShopUrl = "/assets/cba-coffee-shop.jpg";
-const pharmaCosmeticUrl = "/assets/cba-pharma-cosmetic.jpg";
+const dairyUrl = "/assets/cba-dairy-icecream-1280.webp";
+const beverageFunctionalUrl = "/assets/cba-beverage-functional-1280.webp";
+const bakeryUrl = "/assets/cba-bakery-spices-1280.webp";
+const flavoursUrl = "/assets/cba-flavours-1280.webp";
+const naturalColoursUrl = "/assets/cba-natural-colours-1280.webp";
+const artificialColoursUrl = "/assets/cba-artificial-colours-1280.webp";
+const butterUrl = "/assets/cba-butter-1280.webp";
+const chocolateUrl = "/assets/cba-chocolate-1280.webp";
+const restaurantUrl = "/assets/cba-restaurant-1280.webp";
+const coffeeShopUrl = "/assets/cba-coffee-shop-1280.webp";
+const pharmaCosmeticUrl = "/assets/cba-pharma-cosmetic-1280.webp";
 
 export const categories: Category[] = [
   /* ═══════════════════════════════════════════════

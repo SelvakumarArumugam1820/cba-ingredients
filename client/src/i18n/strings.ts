@@ -1,9 +1,9 @@
 /**
- * UI copy for the homepage + shared header/footer, in English and Arabic.
+ * UI copy for every page + shared header/footer, in English and Arabic.
  * Product/category copy lives alongside the data in `@/data/catalogue`.
  *
- * Scope: this covers the homepage, SiteHeader, and the site footer. The
- * About and Sustainable Supply pages are not yet translated.
+ * Scope: the homepage, About, Sustainable Supply, SiteHeader, and the site
+ * footer.
  *
  * Arabic copy is a first-pass translation and should be reviewed by a
  * native speaker before publishing.
@@ -183,6 +183,145 @@ const dict = {
     en: "Saudi Arabia is our primary market, and we also support international B2B enquiries — contact us to discuss your requirements.",
     ar: "المملكة العربية السعودية هي سوقنا الأساسي، كما ندعم استفسارات العملاء الدوليين من الشركات — تواصل معنا لمناقشة متطلباتك.",
   },
+
+  // About page
+  aboutKicker: { en: "ABOUT CBA INGREDIENTS", ar: "عن سي بي إيه للمكونات" },
+  aboutHeroTrail: { en: "SOURCE  →  APPLICATION  →  SUPPLY", ar: "التوريد  ←  التطبيق  ←  الإمداد" },
+  aboutHeroLine1: { en: "A clearer way", ar: "طريقة أوضح" },
+  aboutHeroLine2: { en: "to source.", ar: "للتوريد." },
+  aboutHeroIntro: {
+    en: "We are a Saudi-based company built around a simple idea: food businesses should be able to find the right ingredients, communicate clearly, and count on supply that keeps moving.",
+    ar: "نحن شركة سعودية قامت على فكرة بسيطة: ينبغي أن تتمكن منشآت الأغذية من إيجاد المكونات المناسبة، والتواصل بوضوح، والاعتماد على إمداد لا يتوقف.",
+  },
+  aboutProofTitle: { en: "Dammam, Saudi Arabia.", ar: "الدمام، المملكة العربية السعودية." },
+  aboutProofSub: { en: "Serving the Kingdom with a wider view.", ar: "نخدم المملكة برؤية أوسع." },
+  aboutImageCaption: { en: "A local partner with a global outlook", ar: "شريك محلي برؤية عالمية" },
+  aboutStoryLabel: { en: "01 / OUR STORY", ar: "01 / قصتنا" },
+  aboutStoryHeading1: { en: "Closer to the", ar: "أقرب إلى" },
+  aboutStoryHeading2: { en: "real work.", ar: "العمل الحقيقي." },
+  aboutStoryLead: {
+    en: "CBA Ingredients serves the people behind the products: the procurement team planning next month, the formulator solving a texture issue, and the operator who simply needs dependable stock.",
+    ar: "تخدم سي بي إيه للمكونات الأشخاص الذين يقفون وراء المنتجات: فريق المشتريات الذي يخطط للشهر المقبل، وخبير التركيبات الذي يعالج مشكلة في القوام، والمشغّل الذي يحتاج ببساطة إلى مخزون يمكن الاعتماد عليه.",
+  },
+  aboutStoryP1: {
+    en: "Our portfolio brings together functional ingredients, essential raw materials, flavours, colours, powders, blends, and application-led solutions for a broad range of food businesses. We focus on the Saudi market because proximity matters — to customers, to delivery realities, and to the way food is made here.",
+    ar: "تجمع محفظتنا بين المكونات الوظيفية والمواد الخام الأساسية والنكهات والألوان والمساحيق والخلطات والحلول المبنية على التطبيقات، لخدمة طيف واسع من منشآت الأغذية. ونركّز على السوق السعودي لأن القرب مهم — من العملاء، ومن واقع التسليم، ومن الطريقة التي يُصنع بها الغذاء هنا.",
+  },
+  aboutStoryP2: {
+    en: "That focus gives us a practical perspective. We are not interested in making sourcing feel complicated. We want to make it more transparent, more responsive, and more useful to the businesses we work with.",
+    ar: "يمنحنا هذا التركيز منظورًا عمليًا. لا نسعى إلى جعل التوريد يبدو معقدًا، بل نريد أن نجعله أكثر شفافية وأسرع استجابة وأكثر فائدة للمنشآت التي نعمل معها.",
+  },
+  aboutQuote: {
+    en: "“A better supply relationship starts with understanding what the customer is trying to achieve.”",
+    ar: "«تبدأ علاقة التوريد الأفضل بفهم ما يسعى العميل إلى تحقيقه.»",
+  },
+  aboutQuoteSource: { en: "CBA Ingredients / Our point of view", ar: "سي بي إيه للمكونات / وجهة نظرنا" },
+  aboutAudienceLabel: { en: "02 / WHO WE SERVE", ar: "02 / من نخدم" },
+  aboutAudienceHeading1: { en: "Built for the", ar: "صُممت من أجل" },
+  aboutAudienceHeading2: { en: "people who make.", ar: "من يصنعون." },
+  aboutAudienceIntro: {
+    en: "From established operations to ambitious new concepts, CBA helps teams source with confidence and keep their standards high.",
+    ar: "من المنشآت الراسخة إلى المفاهيم الجديدة الطموحة، تساعد سي بي إيه الفرق على التوريد بثقة والحفاظ على معاييرها العالية.",
+  },
+  aboutAudience1: { en: "Dairy & ice cream producers", ar: "منتجو الألبان والآيس كريم" },
+  aboutAudience2: { en: "Restaurant groups & cafés", ar: "مجموعات المطاعم والمقاهي" },
+  aboutAudience3: { en: "Bakeries & confectioners", ar: "المخابز ومحلات الحلويات" },
+  aboutAudience4: { en: "Caterers & food service", ar: "شركات التموين وخدمات الأغذية" },
+  aboutAudience5: { en: "Beverage makers", ar: "مصنّعو المشروبات" },
+  aboutAudience6: { en: "Food manufacturers", ar: "مصنّعو الأغذية" },
+  aboutValuesLabel: { en: "03 / WHAT WE BELIEVE", ar: "03 / ما نؤمن به" },
+  aboutValuesHeading1: { en: "Practical", ar: "عمليون" },
+  aboutValuesHeading2: { en: "by design.", ar: "بطبيعتنا." },
+  aboutValuesIntro: {
+    en: "Our difference is not a louder promise. It is the discipline of doing the useful things well, every day.",
+    ar: "ما يميزنا ليس وعدًا أعلى صوتًا، بل الانضباط في إتقان الأمور المفيدة كل يوم.",
+  },
+  aboutValue1Title: { en: "Local context, global standard", ar: "سياق محلي ومعيار عالمي" },
+  aboutValue1Copy: {
+    en: "Saudi market focus with a portfolio shaped by the quality and consistency modern food businesses expect.",
+    ar: "تركيز على السوق السعودي مع محفظة تتشكل وفق الجودة والثبات اللذين تتوقعهما منشآت الأغذية الحديثة.",
+  },
+  aboutValue2Title: { en: "Straightforward conversations", ar: "حوارات واضحة ومباشرة" },
+  aboutValue2Copy: {
+    en: "Clear answers, realistic timelines, and a direct line to the person helping you move forward.",
+    ar: "إجابات واضحة، وجداول زمنية واقعية، وتواصل مباشر مع الشخص الذي يساعدك على المضي قدمًا.",
+  },
+  aboutValue3Title: { en: "Value that holds up", ar: "قيمة تدوم" },
+  aboutValue3Copy: {
+    en: "Competitive thinking paired with dependable ingredients and a relationship built for repeat work.",
+    ar: "تفكير تنافسي يقترن بمكونات يمكن الاعتماد عليها وعلاقة مبنية على التعاون المستمر.",
+  },
+  aboutCtaLabel: { en: "NEXT / EXPLORE OUR APPROACH", ar: "التالي / تعرّف على نهجنا" },
+  aboutCtaHeading1: { en: "Supply is a", ar: "التوريد" },
+  aboutCtaHeading2: { en: "shared ambition.", ar: "طموح مشترك." },
+  aboutCtaButton: { en: "See sustainable supply", ar: "اطّلع على التوريد المستدام" },
+
+  // Sustainable Supply page
+  sustainKicker: { en: "SUSTAINABLE SUPPLY", ar: "التوريد المستدام" },
+  sustainHeroTrail: { en: "SOURCE  →  COORDINATE  →  DELIVER  →  IMPROVE", ar: "التوريد  ←  التنسيق  ←  التسليم  ←  التحسين" },
+  sustainHeroLine1: { en: "Move food", ar: "نمضي بالغذاء" },
+  sustainHeroLine2: { en: "forward.", ar: "إلى الأمام." },
+  sustainHeroIntro: {
+    en: "More responsible supply starts with the decisions made before an ingredient reaches the production line. We are building our approach around clarity, efficiency, and long-term value.",
+    ar: "يبدأ التوريد الأكثر مسؤولية بالقرارات التي تُتخذ قبل أن يصل المكوّن إلى خط الإنتاج. ونحن نبني نهجنا على الوضوح والكفاءة والقيمة طويلة الأمد.",
+  },
+  sustainHeroCta: { en: "Explore our principles", ar: "استكشف مبادئنا" },
+  sustainStatement: {
+    en: "A supply chain is not just a route between two points. It is a series of choices.",
+    ar: "سلسلة الإمداد ليست مجرد طريق بين نقطتين، بل سلسلة من الخيارات.",
+  },
+  sustainIntroLabel: { en: "01 / OUR RESPONSIBILITY", ar: "01 / مسؤوليتنا" },
+  sustainIntroHeading1: { en: "Progress is", ar: "التقدّم" },
+  sustainIntroHeading2: { en: "practical.", ar: "أمر عملي." },
+  sustainIntroLead: {
+    en: "We believe responsible supply should be visible in the everyday details: how clearly we communicate, how thoughtfully we plan, and how carefully we protect product value.",
+    ar: "نؤمن بأن التوريد المسؤول ينبغي أن يظهر في التفاصيل اليومية: في وضوح تواصلنا، وعمق تخطيطنا، وحرصنا على حماية قيمة المنتج.",
+  },
+  sustainIntroP: {
+    en: "As a Saudi-based distributor, our role is to create a more dependable connection between ingredient suppliers and the food businesses that rely on them. That means taking a long view of relationships, reducing avoidable friction, and treating every order as part of a wider operating system.",
+    ar: "بصفتنا موزعًا مقره المملكة العربية السعودية، يتمثل دورنا في بناء صلة أكثر موثوقية بين موردي المكونات ومنشآت الأغذية التي تعتمد عليهم. ويعني ذلك النظر إلى العلاقات على المدى الطويل، والحد من العوائق التي يمكن تجنبها، والتعامل مع كل طلب كجزء من منظومة تشغيلية أوسع.",
+  },
+  sustainPhotoTag: { en: "MATERIAL / NATURAL INPUTS", ar: "المواد / مدخلات طبيعية" },
+  sustainPhotoLine1: { en: "Small choices", ar: "الخيارات الصغيرة" },
+  sustainPhotoLine2: { en: "compound over time.", ar: "يتضاعف أثرها مع الوقت." },
+  sustainPrinciplesLabel: { en: "02 / THE WAY WE WORK", ar: "02 / طريقة عملنا" },
+  sustainPrinciplesHeading1: { en: "Four signals", ar: "أربع علامات" },
+  sustainPrinciplesHeading2: { en: "of better supply.", ar: "لتوريد أفضل." },
+  sustainPrinciple1Title: { en: "Plan with context", ar: "التخطيط وفق السياق" },
+  sustainPrinciple1Text: {
+    en: "We listen to the application, production rhythm, and practical requirements behind each enquiry before recommending a route forward.",
+    ar: "نستمع إلى التطبيق وإيقاع الإنتاج والمتطلبات العملية وراء كل استفسار قبل أن نوصي بالمسار المناسب.",
+  },
+  sustainPrinciple2Title: { en: "Strengthen relationships", ar: "تعزيز العلاقات" },
+  sustainPrinciple2Text: {
+    en: "Long-term supplier and customer relationships make communication clearer and help quality expectations stay visible.",
+    ar: "تجعل العلاقات طويلة الأمد مع الموردين والعملاء التواصلَ أوضح، وتُبقي توقعات الجودة حاضرة.",
+  },
+  sustainPrinciple3Title: { en: "Protect product value", ar: "حماية قيمة المنتج" },
+  sustainPrinciple3Text: {
+    en: "Careful handling, clear specifications, and disciplined coordination help ingredients arrive ready to do their job.",
+    ar: "تساعد المناولة الدقيقة والمواصفات الواضحة والتنسيق المنضبط على وصول المكونات جاهزة لأداء دورها.",
+  },
+  sustainPrinciple4Title: { en: "Keep improving", ar: "التحسين المستمر" },
+  sustainPrinciple4Text: {
+    en: "We look for useful improvements in planning and communication rather than making claims we cannot substantiate.",
+    ar: "نبحث عن تحسينات مفيدة في التخطيط والتواصل بدلًا من إطلاق ادعاءات لا يمكننا إثباتها.",
+  },
+  sustainLoopLabel: { en: "03 / A BETTER LOOP", ar: "03 / دورة أفضل" },
+  sustainLoopHeading1: { en: "From source", ar: "من المصدر" },
+  sustainLoopHeading2: { en: "to solution.", ar: "إلى الحل." },
+  sustainLoopIntro: {
+    en: "Every ingredient has a story before it becomes part of yours. Our job is to make that journey simpler to understand and easier to trust.",
+    ar: "لكل مكوّن قصة قبل أن يصبح جزءًا من قصتك، ومهمتنا أن نجعل هذه الرحلة أسهل فهمًا وأجدر بالثقة.",
+  },
+  sustainLoopNode1: { en: "Source", ar: "التوريد" },
+  sustainLoopNode2: { en: "Coordinate", ar: "التنسيق" },
+  sustainLoopNode3: { en: "Supply", ar: "الإمداد" },
+  sustainLoopNode4: { en: "Improve", ar: "التحسين" },
+  sustainCtaLabel: { en: "NEXT / LET’S TALK", ar: "التالي / لنتحدث" },
+  sustainCtaHeading1: { en: "Good supply", ar: "التوريد الجيد" },
+  sustainCtaHeading2: { en: "starts simply.", ar: "يبدأ ببساطة." },
+  sustainCtaButton: { en: "Contact Us", ar: "تواصل معنا" },
 
   // Footer
   footerTagline: { en: "Food ingredients & raw materials", ar: "مكونات غذائية ومواد خام" },

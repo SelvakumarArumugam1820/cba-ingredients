@@ -5,7 +5,10 @@ import useEmblaCarousel from "embla-carousel-react";
 import { Link } from "wouter";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { ROUTE_META } from "@/lib/seo";
 import SiteHeader from "@/components/SiteHeader";
+import FooterCredits from "@/components/FooterCredits";
+import { replaceHomeHash } from "@/lib/sectionNav";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useLanguage, type Lang } from "@/contexts/LanguageContext";
 import { translate, type StringKey } from "@/i18n/strings";
@@ -210,16 +213,7 @@ export default function Home() {
   const splashSyncDelayUsed = useRef(false);
 
   useScrollReveal();
-  useDocumentMeta({
-    title: "CBA Ingredients — Food Ingredients & Raw Materials Supplier in Saudi Arabia",
-    description: "B2B supplier of dairy, bakery, beverage, flavour, colour, butter, and pharmaceutical/cosmetic ingredients in Saudi Arabia, serving food manufacturers and international customers.",
-    path: "/",
-  });
-
-  useEffect(() => {
-    const hash = window.location.hash.replace("#", "");
-    if (hash) document.getElementById(hash)?.scrollIntoView({ behavior: "auto", block: "start" });
-  }, []);
+  useDocumentMeta(ROUTE_META.home);
 
   // Scroll-spy: keep the nav's active-link state in sync with which anchor
   // section the visitor has actually scrolled to, instead of leaving "Home"
@@ -243,7 +237,26 @@ export default function Home() {
       const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
       if (atBottom && sections.length > 0) current = sections[sections.length - 1].id;
       setActiveSection(current);
+      // Mirror the active section in the URL when it changes — unless the
+      // URL's anchor already lies inside that region (e.g. "/#about" while
+      // on "home", "/#faq" while on "contact"), which is left untouched.
+      if (current !== lastSection) {
+        if (lastSection !== null && regionOf(window.location.hash) !== current) {
+          replaceHomeHash(current === "home" ? "" : current === "applications" ? "categories" : "contact");
+        }
+        lastSection = current;
+      }
     };
+    const regionOf = (hash: string) => {
+      const target = hash ? document.getElementById(hash.slice(1)) : null;
+      let region: typeof activeSection = "home";
+      if (!target) return region;
+      for (const { id, el } of sections) {
+        if (el === target || el.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING) region = id;
+      }
+      return region;
+    };
+    let lastSection: typeof activeSection | null = null;
     const onScroll = () => {
       if (ticking) return;
       ticking = true;
@@ -345,7 +358,7 @@ export default function Home() {
                         <div className={`hero-slide ${slide.kind === "logo" ? "hero-slide-logo" : ""} ${isActive ? "is-active" : ""}`} key={key}>
                           {slide.kind === "logo" ? (
                             <div className="hero-slide-logo-stage">
-                              <img src={logoUrl} alt="CBA Ingredients" className="hero-slide-logo-img" draggable={false} loading="eager" fetchPriority="high" />
+                              <img src={logoUrl} alt="CBA Ingredients" className="hero-slide-logo-img" width={512} height={512} draggable={false} loading="eager" fetchPriority="high" />
                             </div>
                           ) : slide.category.image ? (
                             <img
@@ -519,7 +532,7 @@ export default function Home() {
         <section id="faq" className="faq-section section-pad"><div className="faq-head reveal"><SectionLabel>{t("faqLabel")}</SectionLabel><h2>{t("faqHeadingLine1")}<br /><em>{t("faqHeadingLine2")}</em></h2></div><div className="faq-list">{faqs.map((item, index) => <motion.div className="faq-item" key={item.q} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-30px" }} transition={{ duration: 0.4, delay: index * 0.05, ease: [0.23, 1, 0.32, 1] }}><h3>{item.q}</h3><p>{item.a}</p></motion.div>)}</div></section>
       </main>
 
-      <footer className="site-footer reveal"><div className="footer-brand"><img src={logoUrl} alt="CBA Ingredients" /><div><strong>CBA Ingredients</strong><span>{t("footerTagline")}</span></div></div><div className="footer-links"><Link href="/about">{t("navAbout")}</Link><button onClick={() => scrollTo("categories")}>{t("navApplications")}</button><Link href="/sustainable-supply">{t("navSustainable")}</Link><button onClick={() => scrollTo("contact")}>{t("navContact")}</button></div><div className="footer-note">© 2026 CBA Ingredients Company<br />{t("footerLocation")}</div></footer>
+      <footer className="site-footer reveal"><div className="footer-brand"><img src={logoUrl} alt="CBA Ingredients" width={512} height={512} /><div><strong>CBA Ingredients</strong><span>{t("footerTagline")}</span></div></div><div className="footer-links"><Link href="/about">{t("navAbout")}</Link><button onClick={() => scrollTo("categories")}>{t("navApplications")}</button><Link href="/sustainable-supply">{t("navSustainable")}</Link><button onClick={() => scrollTo("contact")}>{t("navContact")}</button></div><div className="footer-note">© 2026 CBA Ingredients Company<br />{t("footerLocation")}</div><FooterCredits /></footer>
     </div>
   );
 }

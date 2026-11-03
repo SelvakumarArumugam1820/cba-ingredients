@@ -16,11 +16,20 @@ async function startServer() {
       ? path.resolve(__dirname, "public")
       : path.resolve(__dirname, "..", "dist", "public");
 
-  app.use(express.static(staticPath));
+  // Same URL rules as vercel.json / .htaccess: "/about/" → "/about", each
+  // route serves its prerendered HTML, and unknown paths get a real 404.
+  app.get(["/about", "/sustainable-supply"], (req, res, next) => {
+    // Express matches with or without the slash, so check the real path.
+    if (req.path.endsWith("/")) res.redirect(301, req.path.slice(0, -1));
+    else next();
+  });
+  app.use(express.static(staticPath, { redirect: false }));
+  app.get(["/about", "/sustainable-supply"], (req, res) => {
+    res.sendFile(path.join(staticPath, req.path, "index.html"));
+  });
 
-  // Handle client-side routing - serve index.html for all routes
-  app.get("*", (_req, res) => {
-    res.sendFile(path.join(staticPath, "index.html"));
+  app.use((_req, res) => {
+    res.status(404).sendFile(path.join(staticPath, "404.html"));
   });
 
   const port = process.env.PORT || 3000;
